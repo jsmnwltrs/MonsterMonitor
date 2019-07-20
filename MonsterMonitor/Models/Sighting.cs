@@ -14,7 +14,7 @@ namespace MonsterMonitor.Models
         public DateTime DateCreated { get; set; }
         public int Rating { get; set; }
         public string ThreatLevel { get; set; }
-        public bool isActive { get; set; }
-        public bool isAnon { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsAnon { get; set; }
     }
 }
