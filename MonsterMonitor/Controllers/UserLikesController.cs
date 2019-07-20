@@ -69,5 +69,12 @@ namespace MonsterMonitor.Controllers
             return Ok(updatedUserLike);
         }
 
+        [HttpDelete("delete/{userLikeId}")]
+        public ActionResult DeleteUserLike(int userLikeId)
+        {
+            var deletedUserLike = _userLikeRepository.Delete(userLikeId);
+
+            return Ok(deletedUserLike);
+        }
     }
 }

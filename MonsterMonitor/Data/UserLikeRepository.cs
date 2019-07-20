@@ -124,5 +124,24 @@ namespace MonsterMonitor.Data
 
                 throw new Exception("Could not update UserLike");
         }
+
+        internal object Delete(int userLikeId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var deletedUserLike = db.QueryFirstOrDefault<UserLike>(@"
+                    delete from UserLikes
+                    output deleted.*
+                    where Id = @userLikeId",
+                    new { userLikeId });
+
+                if (deletedUserLike != null)
+                {
+                    return deletedUserLike;
+                }
+            }
+
+            throw new Exception("Could not delete UserLike");
+        }
     }
 }
