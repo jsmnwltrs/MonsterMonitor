@@ -125,7 +125,7 @@ namespace MonsterMonitor.Data
                 throw new Exception("Could not update UserLike");
         }
 
-        internal object Delete(int userLikeId)
+        public UserLike Delete(int userLikeId)
         {
             using (var db = new SqlConnection(_connectionString))
             {

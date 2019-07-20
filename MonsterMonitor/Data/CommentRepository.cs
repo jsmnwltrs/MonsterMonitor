@@ -29,7 +29,101 @@ namespace MonsterMonitor.Data
                 return commentList;
             }
 
-            throw new NotImplementedException();
+            throw new Exception("No Comments Found");
+        }
+
+        public List<Comment> GetByUserId(int userId)
+        {
+            using(var db = new SqlConnection(_connectionString))
+            {
+                var commentList = db.Query<Comment>(
+                    @"select *
+                    from Comments
+                    where UserId = @userId",
+                    new { userId }).ToList();
+
+                return commentList;
+            }
+
+            throw new Exception("No Comments Found");
+        }
+
+        public List<Comment> GetBySightingId(int sightingId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var commentList = db.Query<Comment>(
+                    @"select *
+                    from Comments
+                    where SightingId = @sightingId",
+                    new { sightingId }).ToList();
+
+                return commentList;
+            }
+
+            throw new Exception("No Comments Found");
+        }
+
+        public Comment Add(int userId, int sightingId, DateTime dateCreated, string message, bool isAnon)
+        {
+            using(var db = new SqlConnection(_connectionString))
+            {
+                var newComment = db.QueryFirstOrDefault<Comment>(
+                    @"insert into Comments(UserId, SightingId, DateCreated, Message, IsAnon)
+                    output inserted.*
+                    values(@userId, @sightingId, @dateCreated, @message, @isAnon)",
+                    new { userId, sightingId, dateCreated, message, isAnon });
+
+                if (newComment != null)
+                {
+                    return newComment;
+                }
+            }
+
+            throw new Exception("Comment did not add");
+        }
+
+        public Comment Update(int id, int userId, int sightingId, DateTime dateCreated, string message, bool isAnon)
+        {
+            using(var db = new SqlConnection(_connectionString))
+            {
+                var updatedComment = db.QueryFirstOrDefault<Comment>(
+                    @"update Comments
+                    set UserId = @userId,
+                    SightingId = @sightingId,
+                    DateCreated = @dateCreated,
+                    Message = @message,
+                    IsAnon = @isAnon
+                    output inserted.*
+                    where Id = @id",
+                    new { userId, sightingId, dateCreated, message, isAnon, id });
+
+                if (updatedComment != null)
+                {
+                    return updatedComment;
+                }
+            }
+
+            throw new Exception("Comment did not update");
+        }
+
+        public Comment Delete(int commentId)
+        {
+            using(var db = new SqlConnection(_connectionString))
+            {
+                var deletedComment = db.QueryFirstOrDefault<Comment>(
+                    @"delete from Comments
+                    output deleted.*
+                    where Id = @commentId",
+                    new { commentId });
+
+                if (deletedComment != null)
+                {
+                    return deletedComment;
+                }
+            }
+
+            throw new Exception("Comment did not delete");
         }
     }
 }
