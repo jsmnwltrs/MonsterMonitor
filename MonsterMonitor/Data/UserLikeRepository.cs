@@ -84,7 +84,7 @@ namespace MonsterMonitor.Data
             throw new Exception("Found No UserLikes");
         }
 
-        public UserLike Add(int sightingId, int userId, bool isLiked)
+        public UserLike Add(UserLike userLikeObject)
         {
             using (var db = new SqlConnection(_connectionString))
             {
@@ -92,7 +92,7 @@ namespace MonsterMonitor.Data
                     Insert into UserLikes(SightingId, UserId, IsLiked)
                     Output inserted.*
                     Values(@sightingId, @userId, @isLiked)",
-                    new { sightingId, userId, isLiked });
+                    userLikeObject);
 
                 if (newUserLike != null)
                 {
@@ -103,7 +103,7 @@ namespace MonsterMonitor.Data
             throw new Exception("Could not add UserLike");
         }
 
-        public UserLike Update(int id, int sightingId, int userId, bool isLiked)
+        public UserLike Update(UserLike userLikeObject)
         {
             using (var db = new SqlConnection(_connectionString))
             {
@@ -114,7 +114,7 @@ namespace MonsterMonitor.Data
                     IsLiked = @isLiked
                     output inserted.*
                     where Id = @id",
-                    new { sightingId, userId, isLiked, id });
+                    userLikeObject);
 
                 if (updatedUserLike != null)
                 {

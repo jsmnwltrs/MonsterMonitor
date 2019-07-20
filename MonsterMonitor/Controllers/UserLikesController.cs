@@ -56,7 +56,7 @@ namespace MonsterMonitor.Controllers
         [HttpPost("add")]
         public ActionResult AddUserLike(UserLike userLikeObject)
         {
-            var newUserLike = _userLikeRepository.Add(userLikeObject.SightingId, userLikeObject.UserId, userLikeObject.IsLiked);
+            var newUserLike = _userLikeRepository.Add(userLikeObject);
 
             return Ok(newUserLike);
         }
@@ -64,7 +64,7 @@ namespace MonsterMonitor.Controllers
         [HttpPut("update")]
         public ActionResult UpdateUserLike(UserLike userLikeObject)
         {
-            var updatedUserLike = _userLikeRepository.Update(userLikeObject.Id, userLikeObject.SightingId, userLikeObject.UserId, userLikeObject.IsLiked);
+            var updatedUserLike = _userLikeRepository.Update(userLikeObject);
 
             return Ok(updatedUserLike);
         }
