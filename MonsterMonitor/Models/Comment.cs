@@ -9,6 +9,6 @@ namespace MonsterMonitor.Models
         public int SightingId { get; set; }
         public DateTime DateCreated { get; set; }
         public string Message { get; set; }
-        public bool isAnon { get; set; }
+        public bool IsAnon { get; set; }
     }
 }

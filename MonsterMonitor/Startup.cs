@@ -44,6 +44,7 @@ namespace MonsterMonitor
             services.AddTransient<UserRepository>();
             services.AddTransient<SightingRepository>();
             services.AddTransient<CommentRepository>();
+            services.AddTransient<UserLikeRepository>();
             services.AddSingleton<IConfiguration>(Configuration);
 
             // In production, the React files will be served from this directory
