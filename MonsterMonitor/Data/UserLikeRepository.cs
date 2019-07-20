@@ -29,7 +29,100 @@ namespace MonsterMonitor.Data
                 return userLikeList;
             }
 
-            throw new NotImplementedException();
+            throw new Exception("Found No UserLikes");
+        }
+
+        public List<UserLike> GetBySightingId(int sightingId)
+        {
+            using(var db = new SqlConnection(_connectionString))
+            {
+                var userLikeList = db.Query<UserLike>(
+                    @"select *
+                    from UserLikes
+                    where SightingId = @sightingId"
+                    , new { sightingId }).ToList();
+
+                return userLikeList;
+            }
+
+            throw new Exception("Found No UserLikes");
+        }
+
+        public List<UserLike> GetByUserId(int userId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var userLikeList = db.Query<UserLike>(
+                    @"select *
+                    from UserLikes
+                    where UserId = @userId"
+                    , new { userId }).ToList();
+
+                return userLikeList;
+            }
+
+            throw new Exception("Found No UserLikes");
+        }
+
+        public UserLike GetBySightingIdAndUserId(int sightingId, int userId)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var userLike = db.QueryFirstOrDefault<UserLike>(
+                    @"select *
+                    from UserLikes
+                    where SightingId = @sightingId and UserId = @userId"
+                    , new { sightingId, userId });
+
+                if (userLike != null)
+                {
+                    return userLike;
+                }
+                
+            }
+
+            throw new Exception("Found No UserLikes");
+        }
+
+        public UserLike Add(int sightingId, int userId, bool isLiked)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var newUserLike = db.QueryFirstOrDefault<UserLike>(@"
+                    Insert into UserLikes(SightingId, UserId, IsLiked)
+                    Output inserted.*
+                    Values(@sightingId, @userId, @isLiked)",
+                    new { sightingId, userId, isLiked });
+
+                if (newUserLike != null)
+                {
+                    return newUserLike;
+                }
+            }
+
+            throw new Exception("Could not add UserLike");
+        }
+
+        public UserLike Update(int id, int sightingId, int userId, bool isLiked)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var updatedUserLike = db.QueryFirstOrDefault<UserLike>(@"
+                    update UserLikes
+                    set SightingId = @sightingId,
+                    UserId = @userId,
+                    IsLiked = @isLiked
+                    output inserted.*
+                    where Id = @id",
+                    new { sightingId, userId, isLiked, id });
+
+                if (updatedUserLike != null)
+                {
+                    return updatedUserLike;
+                }
+            }
+
+                throw new Exception("Could not update UserLike");
         }
     }
 }

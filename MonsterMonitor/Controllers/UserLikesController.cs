@@ -28,5 +28,46 @@ namespace MonsterMonitor.Controllers
 
            return Ok(userLikes);
         }
+
+        [HttpGet("bySightingId/{sightingId}")]
+        public ActionResult GetUserLikesBySightingId(int sightingId)
+        {
+            var userLikes = _userLikeRepository.GetBySightingId(sightingId);
+
+            return Ok(userLikes);
+        }
+
+        [HttpGet("byUserId/{userId}")]
+        public ActionResult GetUserLikesByUserId(int userId)
+        {
+            var userLikes = _userLikeRepository.GetByUserId(userId);
+
+            return Ok(userLikes);
+        }
+
+        [HttpGet("bySightingIdAndUserId/{sightingId}/{userId}")]
+        public ActionResult GetUserLikeBySightingIdAndUserId(int sightingId, int userId)
+        {
+            var userLike = _userLikeRepository.GetBySightingIdAndUserId(sightingId, userId);
+
+            return Ok(userLike);
+        }
+
+        [HttpPost("add")]
+        public ActionResult AddUserLike(UserLike userLikeObject)
+        {
+            var newUserLike = _userLikeRepository.Add(userLikeObject.SightingId, userLikeObject.UserId, userLikeObject.IsLiked);
+
+            return Ok(newUserLike);
+        }
+
+        [HttpPut("update")]
+        public ActionResult UpdateUserLike(UserLike userLikeObject)
+        {
+            var updatedUserLike = _userLikeRepository.Update(userLikeObject.Id, userLikeObject.SightingId, userLikeObject.UserId, userLikeObject.IsLiked);
+
+            return Ok(updatedUserLike);
+        }
+
     }
 }
