@@ -39,8 +39,8 @@ namespace MonsterMonitor.Data
                 var userLikeList = db.Query<UserLike>(
                     @"select *
                     from UserLikes
-                    where SightingId = @sightingId"
-                    , new { sightingId }).ToList();
+                    where SightingId = @sightingId",
+                    new { sightingId }).ToList();
 
                 return userLikeList;
             }
@@ -55,8 +55,8 @@ namespace MonsterMonitor.Data
                 var userLikeList = db.Query<UserLike>(
                     @"select *
                     from UserLikes
-                    where UserId = @userId"
-                    , new { userId }).ToList();
+                    where UserId = @userId",
+                    new { userId }).ToList();
 
                 return userLikeList;
             }
@@ -71,8 +71,8 @@ namespace MonsterMonitor.Data
                 var userLike = db.QueryFirstOrDefault<UserLike>(
                     @"select *
                     from UserLikes
-                    where SightingId = @sightingId and UserId = @userId"
-                    , new { sightingId, userId });
+                    where SightingId = @sightingId and UserId = @userId",
+                    new { sightingId, userId });
 
                 if (userLike != null)
                 {
