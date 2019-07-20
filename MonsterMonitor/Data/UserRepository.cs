@@ -33,7 +33,7 @@ namespace MonsterMonitor.Data
             throw new NotImplementedException();
         }
 
-        internal object GetById(int userId)
+        public User GetById(int userId)
         {
             using(var db = new SqlConnection(_connectionString))
             {
@@ -52,7 +52,7 @@ namespace MonsterMonitor.Data
             throw new Exception("User not Found");
         }
 
-        internal object Add(string username, string email, string imageUrl, string location)
+        public User Add(string username, string email, string imageUrl, string location)
         {
             using(var db = new SqlConnection(_connectionString))
             {
@@ -71,7 +71,7 @@ namespace MonsterMonitor.Data
             throw new Exception("User did not add");
         }
 
-        internal object Update(int id, string username, string email, string imageUrl, string location)
+        public User Update(int id, string username, string email, string imageUrl, string location)
         {
             using (var db = new SqlConnection(_connectionString))
             {
