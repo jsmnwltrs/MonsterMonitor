@@ -30,9 +30,9 @@ namespace MonsterMonitor.Controllers
         }
 
         [HttpGet("byUserId/{userId}")]
-        public ActionResult GetSightingsByUserId(int userId)
+        public ActionResult GetSightingsByUserId(int userId, bool isActive)
         {
-            var sightings = _sightingRepository.GetByUserId(userId);
+            var sightings = _sightingRepository.GetByUserId(userId, isActive);
 
             return Ok(sightings);
         }
@@ -59,6 +59,30 @@ namespace MonsterMonitor.Controllers
             var updatedSighting = _sightingRepository.Update(sightingObject);
 
             return Ok(updatedSighting);
+        }
+
+        [HttpGet("filterByLocation")]
+        public ActionResult FilterResultsByLocation(List<Sighting> sightingList, string location)
+        {
+            var sightingResults = _sightingRepository.FilterLocation(sightingList, location);
+
+            return Ok(sightingResults);
+        }
+
+        [HttpGet("filterByDate")]
+        public ActionResult FilterResultsByDate(List<Sighting> sightingList, string date)
+        {
+            var sightingResults = _sightingRepository.FilterDate(sightingList, date);
+
+            return Ok(sightingResults);
+        }
+
+        [HttpGet("filterByThreatLevel")]
+        public ActionResult FilterResultsByThreatLevel(List<Sighting> sightingList, string threatLevel)
+        {
+            var sightingResults = _sightingRepository.FilterThreatLevel(sightingList, threatLevel);
+
+            return Ok(sightingResults);
         }
     }
 }

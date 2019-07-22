@@ -31,15 +31,15 @@ namespace MonsterMonitor.Data
             throw new Exception("No Sightings Found");
         }
 
-        public List<Sighting> GetByUserId(int userId)
+        public List<Sighting> GetByUserId(int userId, bool isActive)
         {
             using(var db = new SqlConnection(_connectionString))
             {
                 var sightingList = db.Query<Sighting>(
                     @"select *
                     from Sightings
-                    where UserId = @userId",
-                    new { userId }).ToList();
+                    where UserId = @userId and IsActive = @isActive",
+                    new { userId, isActive }).ToList();
 
                 return sightingList;
             }
@@ -112,6 +112,21 @@ namespace MonsterMonitor.Data
             }
 
             throw new Exception("Sighting did not update");
+        }
+
+        internal object FilterLocation(List<Sighting> sightingList, string location)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object FilterThreatLevel(List<Sighting> sightingList, string threatLevel)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object FilterDate(List<Sighting> sightingList, string date)
+        {
+            throw new NotImplementedException();
         }
     }
 }
