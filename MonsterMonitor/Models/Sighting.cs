@@ -12,7 +12,6 @@ namespace MonsterMonitor.Models
         public string ImageUrl { get; set; }
         public string VideoUrl { get; set; }
         public DateTime DateCreated { get; set; }
-        public int Rating { get; set; }
         public string ThreatLevel { get; set; }
         public bool IsActive { get; set; }
         public bool IsAnon { get; set; }

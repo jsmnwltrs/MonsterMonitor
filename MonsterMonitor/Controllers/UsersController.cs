@@ -41,7 +41,7 @@ namespace MonsterMonitor.Controllers
         [HttpPost("add")]
         public ActionResult AddUser(User userObject)
         {
-            var newUser = _userRepository.Add(userObject.Username, userObject.Email, userObject.ImageUrl, userObject.Location);
+            var newUser = _userRepository.Add(userObject);
 
             return Ok(newUser);
         }
@@ -49,7 +49,7 @@ namespace MonsterMonitor.Controllers
         [HttpPut("update")]
         public ActionResult UpdateUser(User userObject)
         {
-            var updatedUser = _userRepository.Update(userObject.Id, userObject.Username, userObject.Email, userObject.ImageUrl, userObject.Location);
+            var updatedUser = _userRepository.Update(userObject);
 
             return Ok(updatedUser);
         }

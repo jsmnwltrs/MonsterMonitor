@@ -24,9 +24,41 @@ namespace MonsterMonitor.Controllers
         [HttpGet("all")]
         public ActionResult GetAllSightings()
         {
-            var sightings = _sightingRepository.getAll();
+            var sightings = _sightingRepository.GetAll();
 
             return Ok(sightings);
+        }
+
+        [HttpGet("byUserId/{userId}")]
+        public ActionResult GetSightingsByUserId(int userId)
+        {
+            var sightings = _sightingRepository.GetByUserId(userId);
+
+            return Ok(sightings);
+        }
+
+        [HttpGet("byId/{sightingId}")]
+        public ActionResult GetSightingById(int sightingId)
+        {
+            var sighting = _sightingRepository.GetById(sightingId);
+
+            return Ok(sighting);
+        }
+
+        [HttpPost("add")]
+        public ActionResult AddSighting(Sighting sightingObject)
+        {
+            var newSighting = _sightingRepository.Add(sightingObject);
+
+            return Ok(newSighting);
+        }
+
+        [HttpPut("update")]
+        public ActionResult UpdateSighting(Sighting sightingObject)
+        {
+            var updatedSighting = _sightingRepository.Update(sightingObject);
+
+            return Ok(updatedSighting);
         }
     }
 }

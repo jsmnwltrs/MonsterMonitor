@@ -64,7 +64,7 @@ namespace MonsterMonitor.Data
             throw new Exception("No Comments Found");
         }
 
-        public Comment Add(int userId, int sightingId, DateTime dateCreated, string message, bool isAnon)
+        public Comment Add(Comment commentObject)
         {
             using(var db = new SqlConnection(_connectionString))
             {
@@ -72,7 +72,7 @@ namespace MonsterMonitor.Data
                     @"insert into Comments(UserId, SightingId, DateCreated, Message, IsAnon)
                     output inserted.*
                     values(@userId, @sightingId, @dateCreated, @message, @isAnon)",
-                    new { userId, sightingId, dateCreated, message, isAnon });
+                    commentObject);
 
                 if (newComment != null)
                 {
@@ -83,7 +83,7 @@ namespace MonsterMonitor.Data
             throw new Exception("Comment did not add");
         }
 
-        public Comment Update(int id, int userId, int sightingId, DateTime dateCreated, string message, bool isAnon)
+        public Comment Update(Comment commentObject)
         {
             using(var db = new SqlConnection(_connectionString))
             {
@@ -96,7 +96,7 @@ namespace MonsterMonitor.Data
                     IsAnon = @isAnon
                     output inserted.*
                     where Id = @id",
-                    new { userId, sightingId, dateCreated, message, isAnon, id });
+                    commentObject);
 
                 if (updatedComment != null)
                 {

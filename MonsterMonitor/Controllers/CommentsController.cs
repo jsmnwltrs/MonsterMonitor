@@ -48,7 +48,7 @@ namespace MonsterMonitor.Controllers
         [HttpPost("add")]
         public ActionResult AddComment(Comment commentObject)
         {
-            var newComment = _commentRepository.Add(commentObject.UserId, commentObject.SightingId, commentObject.DateCreated, commentObject.Message, commentObject.IsAnon);
+            var newComment = _commentRepository.Add(commentObject);
 
             return Ok(newComment);
         }
@@ -56,7 +56,7 @@ namespace MonsterMonitor.Controllers
         [HttpPut("update")]
         public ActionResult UpdateComment(Comment commentObject)
         {
-            var updatedComment = _commentRepository.Update(commentObject.Id, commentObject.UserId, commentObject.SightingId, commentObject.DateCreated, commentObject.Message, commentObject.IsAnon);
+            var updatedComment = _commentRepository.Update(commentObject);
 
             return Ok(updatedComment);
         }

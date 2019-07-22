@@ -52,7 +52,7 @@ namespace MonsterMonitor.Data
             throw new Exception("User not Found");
         }
 
-        public User Add(string username, string email, string imageUrl, string location)
+        public User Add(User userObject)
         {
             using(var db = new SqlConnection(_connectionString))
             {
@@ -60,7 +60,7 @@ namespace MonsterMonitor.Data
                     @"insert into Users(Username, Email, ImageUrl, Location)
                     output inserted.*
                     values(@username, @email, @imageUrl, @location)",
-                    new { username, email, imageUrl, location});
+                    userObject);
 
                 if (newUser != null)
                 {
@@ -71,7 +71,7 @@ namespace MonsterMonitor.Data
             throw new Exception("User did not add");
         }
 
-        public User Update(int id, string username, string email, string imageUrl, string location)
+        public User Update(User userObject)
         {
             using (var db = new SqlConnection(_connectionString))
             {
@@ -83,7 +83,7 @@ namespace MonsterMonitor.Data
                     Location = @location
                     output inserted.*
                     where Id = @id",
-                    new { username, email, imageUrl, location, id });
+                    userObject);
 
                 if (updatedUser != null)
                 {
