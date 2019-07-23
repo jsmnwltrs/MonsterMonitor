@@ -13,26 +13,20 @@ axios.interceptors.request.use((request) => {
 
 axios.interceptors.response.use((response) => {
   return response;
-}, errorResponse => {
+}, (errorResponse) => {
   console.error('Blew up');
 });
 
 const loginUser = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    return firebase.auth().signInWithPopup(provider);
+  const provider = new firebase.auth.GoogleAuthProvider();
+  return firebase.auth().signInWithPopup(provider);
 };
 
-const logoutUser = () => {
-  return firebase.auth().signOut();
-};
+const logoutUser = () => firebase.auth().signOut();
 
-const getUid = () => {
-  return firebase.auth().currentUser.uid;
-};
+const getUid = () => firebase.auth().currentUser.uid;
 
-const getUserEmail = () => {
-  return firebase.auth().currentUser.email;
-};
+const getUserEmail = () => firebase.auth().currentUser.email;
 
 const getCurrentUserJwt = () => firebase
   .auth()

@@ -15,7 +15,7 @@ class MyNavbar extends React.Component {
     isAuthed: PropTypes.bool,
     logoutClick: PropTypes.func,
   }
- 
+
   render() {
     const { isAuthed, logoutClick } = this.props;
 
@@ -30,7 +30,8 @@ class MyNavbar extends React.Component {
           </Nav>
         );
       }
-    }
+      return <div></div>;
+    };
 
     return (
       <div className="my-navbar">
