@@ -9,15 +9,14 @@ import './Auth.scss';
 class Auth extends React.Component {
 
     loginClickEvent = (e) => {
-      const { user } = this.state;
       e.preventDefault();
       authRequests
-        .loginUser(user)
+        .loginUser()
         .then(() => {
           this.props.history.push('/home');
         })
         .catch((error) => {
-          console.error('user did not login', error);
+          console.error('login not successful', error);
         });
     };
 

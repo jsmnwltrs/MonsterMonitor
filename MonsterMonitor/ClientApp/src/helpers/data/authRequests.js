@@ -17,14 +17,9 @@ axios.interceptors.response.use((response) => {
   console.error('Blew up');
 });
 
-const registerUser = (user) => {
-  return firebase.auth().createUserWithEmailAndPassword(user.email, user.password);
-};
-
-const loginUser = (user) => {
-  return firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(cred => {
-    getCurrentUserJwt();
-  });
+const loginUser = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return firebase.auth().signInWithPopup(provider);
 };
 
 const logoutUser = () => {
@@ -49,6 +44,5 @@ export default {
   getUserEmail,
   loginUser,
   logoutUser,
-  registerUser,
   getCurrentUserJwt,
 };
