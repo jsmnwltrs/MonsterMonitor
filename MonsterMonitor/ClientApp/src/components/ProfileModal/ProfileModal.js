@@ -1,5 +1,5 @@
 import React from 'react';
-import './Profile.scss';
+import './ProfileModal.scss';
 import {
   Button,
   Modal,
@@ -21,7 +21,8 @@ const defaultUser = {
   location: '',
 };
 
-class Profile extends React.Component {
+class ProfileModal extends React.Component {
+
   state = {
     user: defaultUser,
     modal: false,
@@ -51,15 +52,14 @@ class Profile extends React.Component {
 
   formFieldStringState = (name, e) => {
     e.preventDefault();
-    const tempUser = { ...this.state.user };
+    const tempUser = { ...this.props.user };
     tempUser[name] = e.target.value;
     this.setState({ user: tempUser });
   }
 
   render() {
-    const { user } = this.state;
+    const { user } = this.props;
 
-    const buildModal = () => {
       return (
         <div>
           <Modal isOpen={this.state.modal}>
@@ -105,21 +105,6 @@ class Profile extends React.Component {
           </Modal>
         </div>
       );
-    };
-
-    return (
-      <div>
-        <h1>Profile Page</h1>
-        {buildModal()}
-        <div className='profile-container'>
-          <img className='profile-avatar' src={user.imageUrl} alt='profile-avatar'></img>
-          <p>{user.username}</p>
-          <p>{user.location}</p>
-          <Button onClick={this.showModal}>Edit Profile</Button>
-        </div>
-      </div>
-    );
-  }
 }
 
-export default Profile;
+export default ProfileModal;
