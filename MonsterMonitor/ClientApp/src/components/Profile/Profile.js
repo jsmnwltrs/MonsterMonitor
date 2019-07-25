@@ -1,17 +1,7 @@
 import React from 'react';
 import './Profile.scss';
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-} from 'reactstrap';
 import userRequests from '../../helpers/data/userRequests';
+import ProfileModal from '../ProfileModal/ProfileModal';
 
 const defaultUser = {
   id: 0,
@@ -24,7 +14,6 @@ const defaultUser = {
 class Profile extends React.Component {
   state = {
     user: defaultUser,
-    modal: false,
   }
 
   componentDidMount() {
@@ -41,81 +30,21 @@ class Profile extends React.Component {
       });
   }
 
-  showModal = () => {
-    this.setState({ modal: true });
-  }
-
-  hideModal = () => {
-    this.setState({ modal: false });
-  }
-
-  formFieldStringState = (name, e) => {
-    e.preventDefault();
-    const tempUser = { ...this.state.user };
-    tempUser[name] = e.target.value;
-    this.setState({ user: tempUser });
+  onSubmit = (userObject) => {
+    
   }
 
   render() {
     const { user } = this.state;
 
-    const buildModal = () => {
-      return (
-        <div>
-          <Modal isOpen={this.state.modal}>
-            <ModalHeader>Edit Profile</ModalHeader>
-            <ModalBody>
-              <Form>
-                <FormGroup>
-                  <Label for="exampleUsername">Username</Label>
-                  <Input
-                    type="username"
-                    name="username"
-                    id="exampleUsername"
-                    placeholder="your username"
-                    value={user.username}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="exampleImageUrl">Image URL</Label>
-                  <Input
-                    type="imageUrl"
-                    name="imageUrl"
-                    id="exampleImageUrl"
-                    placeholder="your profile image url"
-                    value={user.imageUrl}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="exampleLocation">Location</Label>
-                  <Input
-                    type="location"
-                    name="location"
-                    id="exampleLocation"
-                    placeholder="your location"
-                    value={user.location}
-                  />
-                </FormGroup>
-              </Form>
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary">Save</Button>
-              <Button color="secondary" onClick={this.hideModal}>Cancel</Button>
-            </ModalFooter>
-          </Modal>
-        </div>
-      );
-    };
-
     return (
       <div>
         <h1>Profile Page</h1>
-        {buildModal()}
+        <ProfileModal user={user} onSubmit={this.onSubmit}/>
         <div className='profile-container'>
           <img className='profile-avatar' src={user.imageUrl} alt='profile-avatar'></img>
           <p>{user.username}</p>
           <p>{user.location}</p>
-          <Button onClick={this.showModal}>Edit Profile</Button>
         </div>
       </div>
     );

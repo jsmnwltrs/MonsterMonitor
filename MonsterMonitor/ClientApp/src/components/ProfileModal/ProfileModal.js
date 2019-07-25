@@ -11,7 +11,8 @@ import {
   Label,
   Input,
 } from 'reactstrap';
-import userRequests from '../../helpers/data/userRequests';
+import PropTypes from 'prop-types';
+import userShape from '../../helpers/props/userShape';
 
 const defaultUser = {
   id: 0,
@@ -22,48 +23,56 @@ const defaultUser = {
 };
 
 class ProfileModal extends React.Component {
+  static propTypes = {
+    user: userShape,
+    onSubmit: PropTypes.func,
+  }
 
   state = {
-    user: defaultUser,
+    newUser: defaultUser,
     modal: false,
   }
 
-  componentDidMount() {
-    this.setUserState();
-  }
-
-  setUserState = () => {
-    userRequests.getUserByEmail()
-      .then((user) => {
-        this.setState({ user });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  showModal = () => {
-    this.setState({ modal: true });
-  }
-
-  hideModal = () => {
-    this.setState({ modal: false });
+  toggle = () => {
+    const tempUser = {};
+    tempUser.username = this.props.user.username;
+    tempUser.imageUrl = this.props.user.imageUrl;
+    tempUser.location = this.props.user.location;
+    tempUser.id = this.props.user.id;
+    this.setState(prevState => ({
+      modal: !prevState.modal,
+      newUser: tempUser,
+    }));
   }
 
   formFieldStringState = (name, e) => {
     e.preventDefault();
-    const tempUser = { ...this.props.user };
+    const tempUser = { ...this.state.newUser };
     tempUser[name] = e.target.value;
-    this.setState({ user: tempUser });
+    this.setState({ newUser: tempUser });
+  }
+
+  usernameChange = e => this.formFieldStringState('username', e);
+
+  imageUrlChange = e => this.formFieldStringState('imageUrl', e);
+
+  locationChange = e => this.formFieldStringState('location', e);
+
+  formSubmit = () => {
+    const { onSubmit } = this.props;
+    const myUser = { ...this.state.newUser };
+    onSubmit(myUser);
+    this.setState({ newUser: defaultUser });
   }
 
   render() {
-    const { user } = this.props;
+    const { newUser, modal } = this.state;
 
-      return (
+    return (
         <div>
-          <Modal isOpen={this.state.modal}>
-            <ModalHeader>Edit Profile</ModalHeader>
+          <Button onClick={this.toggle}>Edit Profile</Button>
+          <Modal isOpen={modal} toggle={this.toggle}>
+            <ModalHeader toggle={this.toggle}>Edit Profile</ModalHeader>
             <ModalBody>
               <Form>
                 <FormGroup>
@@ -73,7 +82,8 @@ class ProfileModal extends React.Component {
                     name="username"
                     id="exampleUsername"
                     placeholder="your username"
-                    value={user.username}
+                    value={newUser.username}
+                    onChange={this.usernameChange}
                   />
                 </FormGroup>
                 <FormGroup>
@@ -83,7 +93,8 @@ class ProfileModal extends React.Component {
                     name="imageUrl"
                     id="exampleImageUrl"
                     placeholder="your profile image url"
-                    value={user.imageUrl}
+                    value={newUser.imageUrl}
+                    onChange={this.imageUrlChange}
                   />
                 </FormGroup>
                 <FormGroup>
@@ -93,18 +104,24 @@ class ProfileModal extends React.Component {
                     name="location"
                     id="exampleLocation"
                     placeholder="your location"
-                    value={user.location}
+                    value={newUser.location}
+                    onChange={this.locationChange}
                   />
                 </FormGroup>
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary">Save</Button>
-              <Button color="secondary" onClick={this.hideModal}>Cancel</Button>
+              <Button onClick={this.toggle} color="primary">Save</Button>
+              <Button onClick={(e) => {
+                this.toggle();
+                this.formSubmit();
+                e.preventDefault();
+              }} color="secondary">Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>
-      );
+    );
+  }
 }
 
 export default ProfileModal;
