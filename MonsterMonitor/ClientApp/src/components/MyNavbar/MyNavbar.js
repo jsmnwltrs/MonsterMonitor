@@ -36,7 +36,7 @@ class MyNavbar extends React.Component {
     return (
       <div className="my-navbar">
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand>Monster Monitor</NavbarBrand>
+          <NavbarBrand href="/">Monster Monitor</NavbarBrand>
             {buildLinks()}
         </Navbar>
       </div>
