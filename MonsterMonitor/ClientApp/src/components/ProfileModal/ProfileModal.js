@@ -35,6 +35,7 @@ class ProfileModal extends React.Component {
 
   toggle = () => {
     const tempUser = {};
+    tempUser.email = this.props.user.email;
     tempUser.username = this.props.user.username;
     tempUser.imageUrl = this.props.user.imageUrl;
     tempUser.location = this.props.user.location;
@@ -58,11 +59,13 @@ class ProfileModal extends React.Component {
 
   locationChange = e => this.formFieldStringState('location', e);
 
-  formSubmit = () => {
+  formSubmit = (e) => {
     const { onSubmit } = this.props;
     const myUser = { ...this.state.newUser };
+    e.preventDefault();
     onSubmit(myUser);
     this.setState({ newUser: defaultUser });
+    this.toggle();
   }
 
   render() {
@@ -111,12 +114,8 @@ class ProfileModal extends React.Component {
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button onClick={this.toggle} color="primary">Save</Button>
-              <Button onClick={(e) => {
-                this.toggle();
-                this.formSubmit();
-                e.preventDefault();
-              }} color="secondary">Cancel</Button>
+              <Button onClick={this.formSubmit} color="primary">Save</Button>
+              <Button onClick={this.toggle} color="secondary">Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>

@@ -31,8 +31,11 @@ const getUserByEmail = () => new Promise((resolve, reject) => {
 
 const addUser = userObject => axios.post(`${monApiBaseUrl}/users/add`, userObject);
 
+const updateUser = userObject => axios.put(`${monApiBaseUrl}/users/update`, userObject);
+
 export default {
   addUser,
   getUserByEmail,
   getAllUsers,
+  updateUser,
 };

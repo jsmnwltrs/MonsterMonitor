@@ -1,4 +1,5 @@
 import React from 'react';
+import { Label } from 'reactstrap';
 import './Profile.scss';
 import userRequests from '../../helpers/data/userRequests';
 import ProfileModal from '../ProfileModal/ProfileModal';
@@ -31,7 +32,13 @@ class Profile extends React.Component {
   }
 
   onSubmit = (userObject) => {
-    
+    userRequests.updateUser(userObject)
+      .then(() => {
+        this.setUserState();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
@@ -43,7 +50,9 @@ class Profile extends React.Component {
         <ProfileModal user={user} onSubmit={this.onSubmit}/>
         <div className='profile-container'>
           <img className='profile-avatar' src={user.imageUrl} alt='profile-avatar'></img>
+          <Label>Username: </Label>
           <p>{user.username}</p>
+          <Label>Location: </Label>
           <p>{user.location}</p>
         </div>
       </div>
