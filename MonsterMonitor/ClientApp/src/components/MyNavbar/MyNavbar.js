@@ -26,6 +26,9 @@ class MyNavbar extends React.Component {
             <NavItem>
               <NavLink tag={RRNavLink} to='/profile'>Profile</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={RRNavLink} to='/map'>Map</NavLink>
+            </NavItem>
             <NavLink className='logout-link' onClick={logoutClick}>Logout</NavLink>
           </Nav>
         );
