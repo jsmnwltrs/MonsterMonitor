@@ -16,6 +16,7 @@ import Auth from '../components/Auth/Auth';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import Home from '../components/Home/Home';
 import Profile from '../components/Profile/Profile';
+import Browse from '../components/Browse/Browse';
 import MyMap from '../components/MyMap/MyMap';
 import './App.scss';
 
@@ -82,6 +83,7 @@ class App extends React.Component {
                 <PrivateRoute path='/home' component={Home} authed={this.state.authed} />
                 <PrivateRoute path='/profile' component={Profile} authed={this.state.authed} />
                 <PrivateRoute path='/map' component={MyMap} authed={this.state.authed} />
+                <PrivateRoute path='/browse' component={Browse} authed={this.state.authed} />
                 <PublicRoute path='/auth' component={Auth} authed={this.state.authed} />
               </Switch>
           </React.Fragment>
