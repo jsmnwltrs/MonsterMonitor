@@ -1,20 +1,30 @@
 import React from 'react';
 import {
-  Map as
-  LeafletMap,
+  Map,
   TileLayer,
   Marker,
   Popup,
 } from 'react-leaflet';
 import './MyMap.scss';
-
+import { ReactLeafletSearch } from 'react-leaflet-search';
 
 class MyMap extends React.Component {
   render() {
+    const myPopup = (SearchInfo) => {
+      return (
+        <Popup>
+          <div>
+            <p>I am a custom popUp</p>
+            <p>latitude and longitude from search component: lat:{SearchInfo.latLng[0]} lng:{SearchInfo.latLng[1]}</p>
+            <p>Info from search component: {SearchInfo.info}</p>
+          </div>
+        </Popup>
+      );
+    };
+
     return (
-      <div className = "map-container">
-        <h1>Map Page</h1>
-        <LeafletMap
+      <div className = "map">
+        <Map
         center={[50, 10]}
         zoom={6}
         maxZoom={10}
@@ -26,6 +36,7 @@ class MyMap extends React.Component {
         animate={true}
         easeLinearity={0.35}
       >
+        <ReactLeafletSearch position="topleft" popUp={ myPopup}/>
         <TileLayer
           url='https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png'
         />
@@ -34,7 +45,7 @@ class MyMap extends React.Component {
             Popup for any custom information.
           </Popup>
         </Marker>
-      </LeafletMap>
+      </Map>
       </div>
     );
   }
