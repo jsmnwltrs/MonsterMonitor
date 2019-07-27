@@ -29,6 +29,14 @@ namespace MonsterMonitor.Controllers
             return Ok(sightings);
         }
 
+        [HttpGet("byIsActive/{isActive}")]
+        public ActionResult GetSightingsByIsActiveId(bool isActive)
+        {
+            var sightings = _sightingRepository.GetByIsActiveId(isActive);
+
+            return Ok(sightings);
+        }
+
         [HttpGet("byUserId/{userId}")]
         public ActionResult GetSightingsByUserId(int userId, bool isActive)
         {

@@ -47,6 +47,22 @@ namespace MonsterMonitor.Data
             throw new Exception("No Sightings Found");
         }
 
+        public List<Sighting> GetByIsActiveId(bool isActive)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sightingList = db.Query<Sighting>(
+                    @"select *
+                    from Sightings
+                    where IsActive = @isActive",
+                    new { isActive }).ToList();
+
+                return sightingList;
+            }
+
+            throw new Exception("No Sightings Found");
+        }
+
         public Sighting GetById(int sightingId)
         {
             using(var db = new SqlConnection(_connectionString))
@@ -71,9 +87,9 @@ namespace MonsterMonitor.Data
             using(var db = new SqlConnection(_connectionString))
             {
                 var newSighting = db.QueryFirstOrDefault<Sighting>(
-                    @"insert into Sightings(UserId, Title, Location, Description, ImageUrl, VideoUrl, DateCreated, ThreatLevel, IsActive, IsAnon)
+                    @"insert into Sightings(UserId, Title, Location, Description, ImageUrl, VideoUrl, DateCreated, ThreatLevel, IsActive, IsAnon, Latitude, Longitude)
                     output inserted.*
-                    values(@userId, @title, @location, @description, @imageUrl, @videoUrl, @dateCreated, @threatLevel, @isActive, @isAnon)",
+                    values(@userId, @title, @location, @description, @imageUrl, @videoUrl, @dateCreated, @threatLevel, @isActive, @isAnon, @latitude, @longitude)",
                     sightingObject);
 
                 if (newSighting != null)
@@ -100,7 +116,9 @@ namespace MonsterMonitor.Data
                     DateCreated = @dateCreated,
                     ThreatLevel = @threatlevel,
                     IsActive = @isActive,
-                    IsAnon = @isAnon
+                    IsAnon = @isAnon,
+                    Latitude = @latitude,
+                    Longitude = @longitude
                     output inserted.*
                     where Id = @id",
                     sightingObject);

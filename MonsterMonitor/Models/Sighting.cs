@@ -15,5 +15,7 @@ namespace MonsterMonitor.Models
         public string ThreatLevel { get; set; }
         public bool IsActive { get; set; }
         public bool IsAnon { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
     }
 }
