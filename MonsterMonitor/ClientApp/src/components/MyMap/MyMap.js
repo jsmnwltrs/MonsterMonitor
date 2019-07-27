@@ -5,24 +5,48 @@ import {
   Marker,
   Popup,
 } from 'react-leaflet';
+import sightingRequests from '../../helpers/data/sightingRequests';
 import './MyMap.scss';
-import { ReactLeafletSearch } from 'react-leaflet-search';
 
 class MyMap extends React.Component {
-  render() {
-    const myPopup = (SearchInfo) => {
-      return (
-        <Popup>
-          <div>
-            <p>I am a custom popUp</p>
-            <p>latitude and longitude from search component: lat:{SearchInfo.latLng[0]} lng:{SearchInfo.latLng[1]}</p>
-            <p>Info from search component: {SearchInfo.info}</p>
-          </div>
-        </Popup>
-      );
-    };
+ state = {
+   sightings: [],
+ }
 
-    return (
+ componentDidMount() {
+   this.setStates();
+ }
+
+ setStates = () => {
+   sightingRequests.getSightingsByIsActive(true)
+     .then((sightings) => {
+       this.setState({ sightings });
+     })
+     .catch((error) => {
+       console.error(error);
+     });
+ }
+
+ makeMarkers = () => {
+   const { sightings } = this.state;
+   const sightingMarkers = sightings.map(sighting => (
+    <Marker
+    key={sighting.id}
+    position={[sighting.latitude, sighting.longitude]}
+    >
+    <Popup className='pop-up'>
+    Title: {sighting.title}
+    Location: {sighting.location}
+    Threat Level: {sighting.threatLevel}
+    </Popup>
+    </Marker>
+
+   ));
+   return sightingMarkers;
+ }
+
+ render() {
+   return (
       <div className = "map">
         <Map
         center={[50, 10]}
@@ -35,20 +59,17 @@ class MyMap extends React.Component {
         dragging={true}
         animate={true}
         easeLinearity={0.35}
-      >
-        <ReactLeafletSearch position="topleft" popUp={ myPopup}/>
-        <TileLayer
-          url='https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png'
-        />
-         <Marker position={[50, 10]}>
-          <Popup>
-            Popup for any custom information.
-          </Popup>
-        </Marker>
-      </Map>
+        ref='map'
+        >
+          <TileLayer
+            noWrap={true}
+            url='https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png'
+          />
+          {this.makeMarkers()}
+        </Map>
       </div>
-    );
-  }
+   );
+ }
 }
 
 export default MyMap;

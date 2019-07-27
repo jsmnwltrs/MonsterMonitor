@@ -12,6 +12,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-geocode": "^0.1.2",
     "react-leaflet": "^2.4.0",
     "react-leaflet-search": "^0.6.0",
     "react-router-dom": "^5.0.1",
