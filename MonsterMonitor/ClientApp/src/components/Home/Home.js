@@ -3,6 +3,9 @@ import userRequests from '../../helpers/data/userRequests';
 import authRequests from '../../helpers/data/authRequests';
 import './Home.scss';
 
+import MostPopular from '../MostPopular/MostPopular';
+import MostRecent from '../MostRecent/MostRecent';
+
 const defaultUser = {
   username: '',
   email: '',
@@ -39,6 +42,8 @@ class Home extends React.Component {
     return (
       <div>
         <h1>Home Page</h1>
+        <MostPopular />
+        <MostRecent />
       </div>
     );
   }
