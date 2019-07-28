@@ -3,6 +3,7 @@ import { Label } from 'reactstrap';
 import './Profile.scss';
 import userRequests from '../../helpers/data/userRequests';
 import ProfileModal from '../ProfileModal/ProfileModal';
+import SightingTable from '../SightingTable/SightingTable';
 
 const defaultUser = {
   id: 0,
@@ -44,6 +45,12 @@ class Profile extends React.Component {
   render() {
     const { user } = this.state;
 
+    if (user.id === 0) {
+      return (
+      <div></div>
+      );
+    }
+
     return (
       <div>
         <h1>Profile Page</h1>
@@ -54,6 +61,9 @@ class Profile extends React.Component {
           <p>{user.username}</p>
           <Label>Location: </Label>
           <p>{user.location}</p>
+        </div>
+        <div className='sighting-container'>
+          <SightingTable userId={user.id} history={this.props.history}/>
         </div>
       </div>
     );

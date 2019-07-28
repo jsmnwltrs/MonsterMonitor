@@ -31,15 +31,15 @@ namespace MonsterMonitor.Data
             throw new Exception("No Sightings Found");
         }
 
-        public List<Sighting> GetByUserId(int userId, bool isActive)
+        public List<Sighting> GetByUserId(int userId)
         {
             using(var db = new SqlConnection(_connectionString))
             {
                 var sightingList = db.Query<Sighting>(
                     @"select *
                     from Sightings
-                    where UserId = @userId and IsActive = @isActive",
-                    new { userId, isActive }).ToList();
+                    where UserId = @userId",
+                    new { userId }).ToList();
 
                 return sightingList;
             }
