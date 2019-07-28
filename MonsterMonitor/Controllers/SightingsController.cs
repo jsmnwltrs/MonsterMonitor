@@ -38,9 +38,9 @@ namespace MonsterMonitor.Controllers
         }
 
         [HttpGet("byUserId/{userId}")]
-        public ActionResult GetSightingsByUserId(int userId, bool isActive)
+        public ActionResult GetSightingsByUserId(int userId)
         {
-            var sightings = _sightingRepository.GetByUserId(userId, isActive);
+            var sightings = _sightingRepository.GetByUserId(userId);
 
             return Ok(sightings);
         }
