@@ -30,6 +30,7 @@ class Browse extends React.Component {
       <SightingItem
         key={sighting.id}
         sighting={sighting}
+        history={this.props.history}
       />
     ));
 

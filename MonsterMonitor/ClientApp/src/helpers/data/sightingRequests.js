@@ -3,6 +3,8 @@ import apiKeys from '../apikeys';
 
 const monApiBaseUrl = apiKeys.monApi.apiBaseUrl;
 
+const getSightingById = sightingId => axios.get(`${monApiBaseUrl}/sightings/byId/${sightingId}`);
+
 const getSightingsByIsActive = isActive => new Promise((resolve, reject) => {
   axios.get(`${monApiBaseUrl}/sightings/byIsActive/${isActive}`)
     .then((result) => {
@@ -17,5 +19,6 @@ const getSightingsByIsActive = isActive => new Promise((resolve, reject) => {
 });
 
 export default {
+  getSightingById,
   getSightingsByIsActive,
 };

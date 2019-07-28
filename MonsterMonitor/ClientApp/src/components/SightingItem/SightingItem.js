@@ -12,12 +12,16 @@ class SightingItem extends React.Component {
     sighting: sightingShape,
   }
 
+  goToSightingDetails = () => {
+    const { sighting } = this.props;
+    this.props.history.push(`/sightingdetails/${sighting.id}`);
+  }
+
   render() {
     const { sighting } = this.props;
-
     return (
       <div>
-      <Card>
+      <Card onClick={this.goToSightingDetails}>
         <CardImg
           top width="100%"
           src={sighting.imageUrl}
