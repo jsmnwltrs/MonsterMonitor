@@ -5,6 +5,10 @@ const monApiBaseUrl = apiKeys.monApi.apiBaseUrl;
 
 const getSightingById = sightingId => axios.get(`${monApiBaseUrl}/sightings/byId/${sightingId}`);
 
+const addSighting = sightingObject => axios.post(`${monApiBaseUrl}/sightings/add`, sightingObject);
+
+const updateSighting = sightingObject => axios.put(`${monApiBaseUrl}/sightings/update`, sightingObject);
+
 const getSightingsByUserId = userId => new Promise((resolve, reject) => {
   axios.get(`${monApiBaseUrl}/sightings/byUserId/${userId}`)
     .then((result) => {
@@ -32,6 +36,8 @@ const getSightingsByIsActive = isActive => new Promise((resolve, reject) => {
 
 export default {
   getSightingById,
+  addSighting,
+  updateSighting,
   getSightingsByUserId,
   getSightingsByIsActive,
 };

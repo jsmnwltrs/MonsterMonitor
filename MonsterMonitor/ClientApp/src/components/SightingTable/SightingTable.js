@@ -8,6 +8,8 @@ import SightingTableItem from '../SightingTableItem/SightingTableItem';
 class SightingTable extends React.Component {
   static propTypes = {
     userId: PropTypes.number,
+    passSighting: PropTypes.func,
+    changeIsEditing: PropTypes.func,
   }
 
   state = {
@@ -36,6 +38,8 @@ class SightingTable extends React.Component {
       <SightingTableItem
         sighting={sighting}
         key={sighting.id}
+        changeIsEditing={this.props.changeIsEditing}
+        passSighting={this.props.passSighting}
         history={this.props.history}
       />
     ));
@@ -50,6 +54,7 @@ class SightingTable extends React.Component {
               <th>Threat Level</th>
               <th>Status</th>
               <th>Anon</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
