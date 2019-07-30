@@ -2,37 +2,18 @@ import React from 'react';
 import { Table } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './SightingTable.scss';
-import sightingRequests from '../../helpers/data/sightingRequests';
+import sightingShape from '../../helpers/props/sightingShape';
 import SightingTableItem from '../SightingTableItem/SightingTableItem';
 
 class SightingTable extends React.Component {
   static propTypes = {
-    userId: PropTypes.number,
+    sighings: PropTypes.arrayOf(sightingShape),
     passSighting: PropTypes.func,
     changeIsEditing: PropTypes.func,
   }
 
-  state = {
-    sightings: [],
-  }
-
-  componentDidMount() {
-    this.setSightings();
-  }
-
-  setSightings = () => {
-    const { userId } = this.props;
-    sightingRequests.getSightingsByUserId(userId)
-      .then((sightings) => {
-        this.setState({ sightings });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   render() {
-    const { sightings } = this.state;
+    const { sightings } = this.props;
 
     const sightingTableItemComponents = sightings.map(sighting => (
       <SightingTableItem

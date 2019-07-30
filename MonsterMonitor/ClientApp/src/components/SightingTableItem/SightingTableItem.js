@@ -24,6 +24,21 @@ class SightingTableItem extends React.Component {
   render() {
     const { sighting } = this.props;
 
+    const makeButtons = () => {
+      if (sighting.isActive) {
+        return (
+          <button className="btn btn-default" onClick={this.deactivateSighting}>
+            <i className="fas fa-trash-alt"></i>
+          </button>
+        );
+      }
+      return (
+        <button className="btn btn-default" onClick={this.reactivateSighting}>
+          <i className="fas fa-plus-square"></i>
+        </button>
+      );
+    };
+
     return (
       <tr className="sighting-item">
         <th onClick={this.goToSightingDetails}>{sighting.title}</th>
@@ -32,12 +47,10 @@ class SightingTableItem extends React.Component {
         <td>{(sighting.isActive === true) ? 'Active' : 'Inactive'}</td>
         <td>{(sighting.isAnon === true) ? 'Yes' : 'No' }</td>
         <td>
-          <button className="btn btn-default" onClick={this.deleteSighting}>
-              <i className="fas fa-trash-alt"></i>
-          </button>
           <button className="btn btn-default" onClick={this.showEditForm}>
               <i className="fas fa-pencil-alt"></i>
           </button>
+          {makeButtons()}
           </td>
         </tr>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './SightingManagement.scss';
 import sightingRequests from '../../helpers/data/sightingRequests';
 import SightingTable from '../SightingTable/SightingTable';
@@ -21,17 +22,39 @@ const defaultSighting = {
 };
 
 class SightingManagement extends React.Component {
+  static propTypes = {
+    userId: PropTypes.number,
+  }
+
   state = {
     isEditing: false,
     sighting: defaultSighting,
+    sightings: [],
+  }
+
+  componentDidMount() {
+    this.setSightings();
+  }
+
+  setSightings = () => {
+    const { userId } = this.props;
+    sightingRequests.getSightingsByUserId(userId)
+      .then((sightings) => {
+        this.setState({ sightings });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   onSubmitSighting = (sightingObject) => {
     if (this.state.isEditing) {
       sightingRequests.updateSighting(sightingObject);
       this.setState({ isEditing: false });
+      this.setSightings();
     } else {
       sightingRequests.addSighting(sightingObject);
+      this.setSightings();
     }
   }
 
@@ -55,7 +78,7 @@ class SightingManagement extends React.Component {
           userId={this.props.userId}
           />
           <SightingTable
-          userId={this.props.userId}
+          sightings={this.state.sightings}
           changeIsEditing={this.changeIsEditing}
           passSighting={this.passSighting}
           history={this.props.history}
