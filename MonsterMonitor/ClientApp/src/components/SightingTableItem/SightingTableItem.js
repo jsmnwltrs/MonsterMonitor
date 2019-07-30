@@ -8,6 +8,7 @@ class SightingTableItem extends React.Component {
     sighting: sightingShape,
     changeIsEditing: PropTypes.func,
     passSighting: PropTypes.func,
+    changeIsActive: PropTypes.func,
   }
 
   goToSightingDetails = () => {
@@ -19,6 +20,20 @@ class SightingTableItem extends React.Component {
     const { changeIsEditing, passSighting, sighting } = this.props;
     passSighting(sighting);
     changeIsEditing(true);
+  }
+
+  reactivateSighting = () => {
+    const { changeIsActive } = this.props;
+    const mySighting = { ...this.props.sighting };
+    mySighting.isActive = true;
+    changeIsActive(mySighting);
+  }
+
+  deactivateSighting = () => {
+    const { changeIsActive } = this.props;
+    const mySighting = { ...this.props.sighting };
+    mySighting.isActive = false;
+    changeIsActive(mySighting);
   }
 
   render() {

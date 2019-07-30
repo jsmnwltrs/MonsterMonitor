@@ -10,6 +10,7 @@ class SightingTable extends React.Component {
     sighings: PropTypes.arrayOf(sightingShape),
     passSighting: PropTypes.func,
     changeIsEditing: PropTypes.func,
+    changeIsActive: PropTypes.func,
   }
 
   render() {
@@ -21,6 +22,7 @@ class SightingTable extends React.Component {
         key={sighting.id}
         changeIsEditing={this.props.changeIsEditing}
         passSighting={this.props.passSighting}
+        changeIsActive={this.props.changeIsActive}
         history={this.props.history}
       />
     ));

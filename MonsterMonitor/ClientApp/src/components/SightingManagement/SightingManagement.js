@@ -66,6 +66,16 @@ class SightingManagement extends React.Component {
     this.setState({ sighting });
   }
 
+  changeIsActive = (sighting) => {
+    sightingRequests.updateSighting(sighting)
+      .then(() => {
+        this.setSightings();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
     return (
       <div className='sighting-container'>
@@ -81,6 +91,7 @@ class SightingManagement extends React.Component {
           sightings={this.state.sightings}
           changeIsEditing={this.changeIsEditing}
           passSighting={this.passSighting}
+          changeIsActive={this.changeIsActive}
           history={this.props.history}
           />
         </div>
