@@ -3,7 +3,8 @@ import { Label } from 'reactstrap';
 import './Profile.scss';
 import userRequests from '../../helpers/data/userRequests';
 import ProfileModal from '../ProfileModal/ProfileModal';
-import SightingTable from '../SightingTable/SightingTable';
+import SightingManagement from '../SightingManagement/SightingManagement';
+
 
 const defaultUser = {
   id: 0,
@@ -32,7 +33,7 @@ class Profile extends React.Component {
       });
   }
 
-  onSubmit = (userObject) => {
+  onSubmitUser = (userObject) => {
     userRequests.updateUser(userObject)
       .then(() => {
         this.setUserState();
@@ -41,6 +42,7 @@ class Profile extends React.Component {
         console.error(error);
       });
   }
+
 
   render() {
     const { user } = this.state;
@@ -53,8 +55,8 @@ class Profile extends React.Component {
 
     return (
       <div>
-        <h1>Profile Page</h1>
-        <ProfileModal user={user} onSubmit={this.onSubmit}/>
+        <h1>Your Profile</h1>
+        <ProfileModal user={user} onSubmit={this.onSubmitUser}/>
         <div className='profile-container'>
           <img className='profile-avatar' src={user.imageUrl} alt='profile-avatar'></img>
           <Label>Username: </Label>
@@ -62,9 +64,7 @@ class Profile extends React.Component {
           <Label>Location: </Label>
           <p>{user.location}</p>
         </div>
-        <div className='sighting-container'>
-          <SightingTable userId={user.id} history={this.props.history}/>
-        </div>
+        <SightingManagement userId={user.id} history={this.props.history}/>
       </div>
     );
   }

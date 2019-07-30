@@ -2,40 +2,25 @@ import React from 'react';
 import { Table } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './SightingTable.scss';
-import sightingRequests from '../../helpers/data/sightingRequests';
+import sightingShape from '../../helpers/props/sightingShape';
 import SightingTableItem from '../SightingTableItem/SightingTableItem';
 
 class SightingTable extends React.Component {
   static propTypes = {
-    userId: PropTypes.number,
-  }
-
-  state = {
-    sightings: [],
-  }
-
-  componentDidMount() {
-    this.setSightings();
-  }
-
-  setSightings = () => {
-    const { userId } = this.props;
-    sightingRequests.getSightingsByUserId(userId)
-      .then((sightings) => {
-        this.setState({ sightings });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    sighings: PropTypes.arrayOf(sightingShape),
+    passSighting: PropTypes.func,
+    changeIsEditing: PropTypes.func,
   }
 
   render() {
-    const { sightings } = this.state;
+    const { sightings } = this.props;
 
     const sightingTableItemComponents = sightings.map(sighting => (
       <SightingTableItem
         sighting={sighting}
         key={sighting.id}
+        changeIsEditing={this.props.changeIsEditing}
+        passSighting={this.props.passSighting}
         history={this.props.history}
       />
     ));
@@ -50,6 +35,7 @@ class SightingTable extends React.Component {
               <th>Threat Level</th>
               <th>Status</th>
               <th>Anon</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
