@@ -78,7 +78,8 @@ namespace MonsterMonitor.Data
                 {
                     return userLike;
                 }
-                
+
+                return userLike;
             }
 
             throw new Exception("Found No UserLikes");

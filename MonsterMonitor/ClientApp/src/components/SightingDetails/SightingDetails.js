@@ -1,6 +1,8 @@
 import React from 'react';
 import './SightingDetails.scss';
 import sightingRequests from '../../helpers/data/sightingRequests';
+import userRequests from '../../helpers/data/userRequests';
+import UserLike from '../UserLike/UserLike';
 
 const defaultSighting = {
   id: 0,
@@ -18,13 +20,23 @@ const defaultSighting = {
   longitude: 0,
 };
 
+const defaultUser = {
+  id: 0,
+  username: '',
+  email: '',
+  imageUrl: '',
+  location: '',
+};
+
 class SightingDetails extends React.Component {
   state = {
     sighting: defaultSighting,
+    user: defaultUser,
   }
 
   componentDidMount() {
     this.setSighting();
+    this.setUser();
   }
 
   setSighting = () => {
@@ -38,8 +50,18 @@ class SightingDetails extends React.Component {
       });
   }
 
+  setUser = () => {
+    userRequests.getUserByEmail()
+      .then((user) => {
+        this.setState({ user });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
-    const { sighting } = this.state;
+    const { sighting, user } = this.state;
 
     return (
       <div>
@@ -48,6 +70,7 @@ class SightingDetails extends React.Component {
         <p>{sighting.threatLevel}</p>
         <img src={sighting.imageUrl} alt='sighting pic'/>
         <p>{sighting.description}</p>
+        <UserLike user={user} sighting={sighting}/>
       </div>
     );
   }
