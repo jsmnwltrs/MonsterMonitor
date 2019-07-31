@@ -18,6 +18,7 @@ class UserLike extends React.Component {
 
   componentWillReceiveProps(props) {
     this.setUserLike(props);
+    this.setTotals(props);
   }
 
   setUserLike = (props) => {
@@ -29,6 +30,17 @@ class UserLike extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  setTotals = (props) => {
+    const { sighting } = props;
+    userLikeRequests.getUserLikesBySightingId(sighting.id)
+      .then((userLikes) => {
+        const totalLikes = userLikes.filter(userLike => userLike.isLiked === true).length;
+        const totalDislikes = userLikes.filter(userLike => userLike.isLiked === false).length;
+        this.setState({ totalLikes, totalDislikes });
+      })
+      .catch();
   }
 
   likeEvent = (bool) => {

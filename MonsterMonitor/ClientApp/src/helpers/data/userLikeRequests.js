@@ -17,6 +17,17 @@ const getUserLikeBySightingIdAndUserId = (sightingId, userId) => new Promise((re
     });
 });
 
+const getUserLikesBySightingId = sightingId => new Promise((resolve, reject) => {
+  axios.get(`${monApiBaseUrl}/userlikes/bySightingId/${sightingId}`)
+    .then((result) => {
+      const userLikes = result.data;
+      resolve(userLikes);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
 const addUserLike = userLikeObject => new Promise((resolve, reject) => {
   axios.post(`${monApiBaseUrl}/userlikes/add`, userLikeObject)
     .then((result) => {
@@ -47,4 +58,5 @@ export default {
   addUserLike,
   updateUserLike,
   deleteUserLike,
+  getUserLikesBySightingId,
 };
