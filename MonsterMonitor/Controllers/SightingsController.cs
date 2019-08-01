@@ -69,26 +69,26 @@ namespace MonsterMonitor.Controllers
             return Ok(updatedSighting);
         }
 
-        [HttpGet("filterByLocation")]
-        public ActionResult FilterResultsByLocation(List<Sighting> sightingList, string location)
-        {
-            var sightingResults = _sightingRepository.FilterLocation(sightingList, location);
-
-            return Ok(sightingResults);
-        }
-
-        [HttpGet("filterByDate")]
-        public ActionResult FilterResultsByDate(List<Sighting> sightingList, string date)
-        {
-            var sightingResults = _sightingRepository.FilterDate(sightingList, date);
-
-            return Ok(sightingResults);
-        }
-
         [HttpGet("filterByThreatLevel")]
         public ActionResult FilterResultsByThreatLevel(List<Sighting> sightingList, string threatLevel)
         {
             var sightingResults = _sightingRepository.FilterThreatLevel(sightingList, threatLevel);
+
+            return Ok(sightingResults);
+        }
+
+        [HttpGet("sortByMostRecent")]
+        public ActionResult SortResultsByMostRecent(List<Sighting> sightingList)
+        {
+            var sightingResults = _sightingRepository.SortMostRecent(sightingList);
+
+            return Ok(sightingResults);
+        }
+
+        [HttpGet("sortByMostPopular")]
+        public ActionResult SortResultsByMostPopular(List<Sighting> sightingList)
+        {
+            var sightingResults = _sightingRepository.SortMostPopular(sightingList);
 
             return Ok(sightingResults);
         }

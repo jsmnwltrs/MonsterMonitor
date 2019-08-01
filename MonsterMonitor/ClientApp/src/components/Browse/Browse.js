@@ -3,6 +3,7 @@ import './Browse.scss';
 
 import sightingRequests from '../../helpers/data/sightingRequests';
 import SightingItem from '../SightingItem/SightingItem';
+import Filters from '../Filters/Filters';
 
 class Browse extends React.Component {
   state = {
@@ -10,10 +11,10 @@ class Browse extends React.Component {
   }
 
   componentDidMount() {
-    this.setStates();
+    this.setSightings();
   }
 
-  setStates = () => {
+  setSightings = () => {
     sightingRequests.getSightingsByIsActive(true)
       .then((sightings) => {
         this.setState({ sightings });
@@ -37,6 +38,7 @@ class Browse extends React.Component {
     return (
       <div>
         <h1>Browse</h1>
+        <Filters setSightings={this.setSightings}/>
         {sightingItemComponents}
       </div>
     );

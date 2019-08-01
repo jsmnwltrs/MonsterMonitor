@@ -132,19 +132,57 @@ namespace MonsterMonitor.Data
             throw new Exception("Sighting did not update");
         }
 
-        internal object FilterLocation(List<Sighting> sightingList, string location)
+        public List<Sighting> SortMostPopular(List<Sighting> sightingList)
         {
-            throw new NotImplementedException();
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var userLikeList = db.Query<UserLike>(
+                   @"select *
+                    from UserLikes").ToList();
+
+                foreach (var sighting in sightingList)
+                {
+                    var matchingUserLikes = userLikeList.Where(userLike => userLike.SightingId == sighting.Id).ToList();
+
+                    var totalLikes = 0;
+                    var totalDislikes = 0;
+
+                    foreach (var userLike in matchingUserLikes)
+                    {
+                        if (userLike.IsLiked)
+                        {
+                            totalLikes++;
+                            totalDislikes++;
+                        }
+                    }
+
+                    sighting.Rating = totalLikes - totalDislikes;
+                }
+
+                var sortedSightings = sightingList.OrderBy(sighting => sighting.Rating).ToList();
+
+                return sortedSightings;
+            }
+
+            throw new Exception("No Sightings Found");
         }
 
-        internal object FilterThreatLevel(List<Sighting> sightingList, string threatLevel)
+        public List<Sighting> SortMostRecent(List<Sighting> sightingList)
         {
-            throw new NotImplementedException();
+            var sortedSightings = sightingList.OrderBy(sighting => sighting.DateCreated).ToList();
+
+            return sortedSightings;
+
+            throw new Exception("No Sightings Found");
         }
 
-        internal object FilterDate(List<Sighting> sightingList, string date)
+        public List<Sighting> FilterThreatLevel(List<Sighting> sightingList, string threatLevel)
         {
-            throw new NotImplementedException();
+            var filteredSightings = sightingList.Where(sighting => sighting.ThreatLevel == threatLevel).ToList();
+
+            return filteredSightings;
+
+            throw new Exception("No Sightings Found");
         }
     }
 }
