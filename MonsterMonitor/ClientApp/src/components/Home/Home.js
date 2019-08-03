@@ -42,8 +42,8 @@ class Home extends React.Component {
     return (
       <div>
         <h1>Home Page</h1>
-        <MostPopular />
-        <MostRecent />
+        <MostPopular history={this.props.history}/>
+        <MostRecent history={this.props.history}/>
       </div>
     );
   }

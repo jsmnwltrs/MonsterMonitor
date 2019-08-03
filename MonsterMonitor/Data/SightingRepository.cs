@@ -47,14 +47,15 @@ namespace MonsterMonitor.Data
             throw new Exception("No Sightings Found");
         }
 
-        public List<Sighting> GetByIsActiveId(bool isActive)
+        public List<Sighting> GetByIsActive(bool isActive)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var sightingList = db.Query<Sighting>(
                     @"select *
                     from Sightings
-                    where IsActive = @isActive",
+                    where IsActive = @isActive
+                    order by DateCreated desc",
                     new { isActive }).ToList();
 
                 return sightingList;
@@ -132,19 +133,84 @@ namespace MonsterMonitor.Data
             throw new Exception("Sighting did not update");
         }
 
-        internal object FilterLocation(List<Sighting> sightingList, string location)
+        public List<Sighting> GetByUserIdAndIsActive(int userId, bool isActive)
         {
-            throw new NotImplementedException();
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sightingList = db.Query<Sighting>(
+                    @"select *
+                    from Sightings
+                    where UserId = @userId and IsActive = @isActive
+                    order by DateCreated desc",
+                    new { userId, isActive }).ToList();
+
+                return sightingList;
+            }
+
+            throw new Exception("No Sightings Found");
         }
 
-        internal object FilterThreatLevel(List<Sighting> sightingList, string threatLevel)
+        public List<Sighting> SortMostPopular(List<Sighting> sightingList)
         {
-            throw new NotImplementedException();
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var userLikeList = db.Query<UserLike>(
+                   @"select *
+                    from UserLikes").ToList();
+
+                foreach (var sighting in sightingList)
+                {
+                    var matchingUserLikes = userLikeList.Where(userLike => userLike.SightingId == sighting.Id).ToList();
+
+                    var totalLikes = 0;
+                    var totalDislikes = 0;
+
+                    foreach (var userLike in matchingUserLikes)
+                    {
+                        if (userLike.IsLiked)
+                        {
+                            totalLikes++;
+                        } else
+                        {
+                            totalDislikes++;
+                        }
+                    }
+
+                    sighting.Rating = totalLikes - totalDislikes;
+                }
+
+                var sortedSightings = sightingList.OrderBy(sighting => sighting.Rating).ToList();
+
+                return sortedSightings;
+            }
+
+            throw new Exception("No Sightings Found");
         }
 
-        internal object FilterDate(List<Sighting> sightingList, string date)
+        public List<Sighting> SortMostRecent(List<Sighting> sightingList)
         {
-            throw new NotImplementedException();
+            var sortedSightings = sightingList.OrderBy(sighting => sighting.DateCreated).ToList();
+
+            return sortedSightings;
+
+            throw new Exception("No Sightings Found");
+        }
+
+        public List<Sighting> FilterThreatLevel(string threatLevel)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sightingList = db.Query<Sighting>(
+                    @"select *
+                    from Sightings
+                    where IsActive = 'true' and ThreatLevel = @threatLevel
+                    order by DateCreated desc",
+                    new { threatLevel }).ToList();
+
+                return sightingList;
+            }
+
+            throw new Exception("No Sightings Found");
         }
     }
 }

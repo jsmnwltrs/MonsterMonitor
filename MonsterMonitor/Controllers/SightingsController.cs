@@ -30,9 +30,9 @@ namespace MonsterMonitor.Controllers
         }
 
         [HttpGet("byIsActive/{isActive}")]
-        public ActionResult GetSightingsByIsActiveId(bool isActive)
+        public ActionResult GetSightingsByIsActive(bool isActive)
         {
-            var sightings = _sightingRepository.GetByIsActiveId(isActive);
+            var sightings = _sightingRepository.GetByIsActive(isActive);
 
             return Ok(sightings);
         }
@@ -41,6 +41,14 @@ namespace MonsterMonitor.Controllers
         public ActionResult GetSightingsByUserId(int userId)
         {
             var sightings = _sightingRepository.GetByUserId(userId);
+
+            return Ok(sightings);
+        }
+
+        [HttpGet("byUserIdAndIsActive/{userId}/{isActive}")]
+        public ActionResult GetSightingsByUserIdAndIsActive(int userId, bool isActive)
+        {
+            var sightings = _sightingRepository.GetByUserIdAndIsActive(userId, isActive);
 
             return Ok(sightings);
         }
@@ -69,26 +77,26 @@ namespace MonsterMonitor.Controllers
             return Ok(updatedSighting);
         }
 
-        [HttpGet("filterByLocation")]
-        public ActionResult FilterResultsByLocation(List<Sighting> sightingList, string location)
+        [HttpGet("filterByThreatLevel/{threatLevel}")]
+        public ActionResult FilterResultsByThreatLevel(string threatLevel)
         {
-            var sightingResults = _sightingRepository.FilterLocation(sightingList, location);
+            var sightingResults = _sightingRepository.FilterThreatLevel(threatLevel);
 
             return Ok(sightingResults);
         }
 
-        [HttpGet("filterByDate")]
-        public ActionResult FilterResultsByDate(List<Sighting> sightingList, string date)
+        [HttpGet("sortByMostRecent")]
+        public ActionResult SortResultsByMostRecent(List<Sighting> sightingList)
         {
-            var sightingResults = _sightingRepository.FilterDate(sightingList, date);
+            var sightingResults = _sightingRepository.SortMostRecent(sightingList);
 
             return Ok(sightingResults);
         }
 
-        [HttpGet("filterByThreatLevel")]
-        public ActionResult FilterResultsByThreatLevel(List<Sighting> sightingList, string threatLevel)
+        [HttpGet("sortByMostPopular")]
+        public ActionResult SortResultsByMostPopular(List<Sighting> sightingList)
         {
-            var sightingResults = _sightingRepository.FilterThreatLevel(sightingList, threatLevel);
+            var sightingResults = _sightingRepository.SortMostPopular(sightingList);
 
             return Ok(sightingResults);
         }

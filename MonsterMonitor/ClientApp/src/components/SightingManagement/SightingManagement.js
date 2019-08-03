@@ -47,6 +47,10 @@ class SightingManagement extends React.Component {
       });
   }
 
+  setIsActiveFilter = (sightings) => {
+    this.setState({ sightings });
+  }
+
   onSubmitSighting = (sightingObject) => {
     if (this.state.isEditing) {
       sightingRequests.updateSighting(sightingObject);
@@ -88,10 +92,13 @@ class SightingManagement extends React.Component {
           userId={this.props.userId}
           />
           <SightingTable
+          userId={this.props.userId}
           sightings={this.state.sightings}
           changeIsEditing={this.changeIsEditing}
           passSighting={this.passSighting}
           changeIsActive={this.changeIsActive}
+          setIsActiveFilter={this.setIsActiveFilter}
+          setSightings={this.setSightings}
           history={this.props.history}
           />
         </div>
