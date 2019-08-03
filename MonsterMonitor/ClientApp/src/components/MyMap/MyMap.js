@@ -5,6 +5,7 @@ import {
   Marker,
   Popup,
 } from 'react-leaflet';
+import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import SearchField from 'react-search-field';
 import sightingRequests from '../../helpers/data/sightingRequests';
@@ -58,9 +59,7 @@ class MyMap extends React.Component {
 
  searchChange = (value, e) => {
    e.preventDefault();
-   if (value === '') {
-     console.log('none');
-   } else {
+   if (value !== '') {
      mapRequests.getCoordinates(value).then((coordinates) => {
        this.setState({ lat: coordinates.latitude, long: coordinates.longitude });
        this.refs.map.leafletElement.panTo([coordinates.latitude, coordinates.longitude]);
@@ -72,6 +71,7 @@ class MyMap extends React.Component {
 
  makeUserMarker = () => {
    const { user, lat, long } = this.state;
+   const Profile = '/profile';
    return <Marker
    key={user.id}
    position={[lat, long]}
@@ -80,14 +80,19 @@ class MyMap extends React.Component {
    <img className='avatar' src={user.imageUrl} alt='avatar'></img>
    Username: {user.username}
    Location: {user.location}
+   <Link to={Profile}>
+    Profile Details
+    </Link>
    </Popup>
    </Marker>;
  }
 
  makeSightingMarkers = () => {
    const { sightings } = this.state;
-   const sightingMarkers = sightings.map(sighting => (
-    <Marker
+   const sightingMarkers = sightings.map((sighting) => {
+     const SightingDetails = `/sightingdetails/${sighting.id}`;
+     return (
+     <Marker
     key={sighting.id}
     position={[sighting.latitude, sighting.longitude]}
     >
@@ -95,10 +100,13 @@ class MyMap extends React.Component {
     Title: {sighting.title}
     Location: {sighting.location}
     Threat Level: {sighting.threatLevel}
+    <Link to={SightingDetails}>
+    Profile Details
+    </Link>
     </Popup>
-    </Marker>
-
-   ));
+     </Marker>
+     );
+   });
    return sightingMarkers;
  }
 
