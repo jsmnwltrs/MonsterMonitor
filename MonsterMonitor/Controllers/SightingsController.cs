@@ -30,9 +30,9 @@ namespace MonsterMonitor.Controllers
         }
 
         [HttpGet("byIsActive/{isActive}")]
-        public ActionResult GetSightingsByIsActiveId(bool isActive)
+        public ActionResult GetSightingsByIsActive(bool isActive)
         {
-            var sightings = _sightingRepository.GetByIsActiveId(isActive);
+            var sightings = _sightingRepository.GetByIsActive(isActive);
 
             return Ok(sightings);
         }
@@ -41,6 +41,14 @@ namespace MonsterMonitor.Controllers
         public ActionResult GetSightingsByUserId(int userId)
         {
             var sightings = _sightingRepository.GetByUserId(userId);
+
+            return Ok(sightings);
+        }
+
+        [HttpGet("byUserIdAndIsActive/{userId}/{isActive}")]
+        public ActionResult GetSightingsByUserIdAndIsActive(int userId, bool isActive)
+        {
+            var sightings = _sightingRepository.GetByUserIdAndIsActive(userId, isActive);
 
             return Ok(sightings);
         }
@@ -69,10 +77,10 @@ namespace MonsterMonitor.Controllers
             return Ok(updatedSighting);
         }
 
-        [HttpGet("filterByThreatLevel")]
-        public ActionResult FilterResultsByThreatLevel(List<Sighting> sightingList, string threatLevel)
+        [HttpGet("filterByThreatLevel/{threatLevel}")]
+        public ActionResult FilterResultsByThreatLevel(string threatLevel)
         {
-            var sightingResults = _sightingRepository.FilterThreatLevel(sightingList, threatLevel);
+            var sightingResults = _sightingRepository.FilterThreatLevel(threatLevel);
 
             return Ok(sightingResults);
         }

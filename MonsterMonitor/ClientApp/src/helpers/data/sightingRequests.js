@@ -34,10 +34,67 @@ const getSightingsByIsActive = isActive => new Promise((resolve, reject) => {
     });
 });
 
+const getSightingsByUserIdAndIsActive = (userId, isActive) => new Promise((resolve, reject) => {
+  axios.get(`${monApiBaseUrl}/sightings/byUserIdAndIsActive/${userId}/${isActive}`)
+    .then((result) => {
+      if (result != null) {
+        const sightings = result.data;
+        resolve(sightings);
+      }
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
+const getSightingsByThreatLevel = threatLevel => new Promise((resolve, reject) => {
+  axios.get(`${monApiBaseUrl}/sightings/filterByThreatLevel/${threatLevel}`)
+    .then((result) => {
+      if (result != null) {
+        const sightings = result.data;
+        resolve(sightings);
+      }
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
+
+const sortByMostRecent = sightings => new Promise((resolve, reject) => {
+  axios.get(`${monApiBaseUrl}/sightings/sortByMostRecent`, sightings)
+    .then((result) => {
+      if (result != null) {
+        const sortedSightings = result.data;
+        resolve(sortedSightings);
+      }
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
+const sortByMostPopular = sightings => new Promise((resolve, reject) => {
+  axios.get(`${monApiBaseUrl}/sightings/sortByMostPopular`, sightings)
+    .then((result) => {
+      if (result != null) {
+        const sortedSightings = result.data;
+        resolve(sortedSightings);
+      }
+    })
+    .catch((err) => {
+      reject(err);
+    });
+});
+
 export default {
   getSightingById,
   addSighting,
   updateSighting,
   getSightingsByUserId,
   getSightingsByIsActive,
+  getSightingsByUserIdAndIsActive,
+  getSightingsByThreatLevel,
+  sortByMostRecent,
+  sortByMostPopular,
 };

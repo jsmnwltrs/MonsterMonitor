@@ -47,14 +47,15 @@ namespace MonsterMonitor.Data
             throw new Exception("No Sightings Found");
         }
 
-        public List<Sighting> GetByIsActiveId(bool isActive)
+        public List<Sighting> GetByIsActive(bool isActive)
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var sightingList = db.Query<Sighting>(
                     @"select *
                     from Sightings
-                    where IsActive = @isActive",
+                    where IsActive = @isActive
+                    order by DateCreated desc",
                     new { isActive }).ToList();
 
                 return sightingList;
@@ -132,6 +133,23 @@ namespace MonsterMonitor.Data
             throw new Exception("Sighting did not update");
         }
 
+        public List<Sighting> GetByUserIdAndIsActive(int userId, bool isActive)
+        {
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sightingList = db.Query<Sighting>(
+                    @"select *
+                    from Sightings
+                    where UserId = @userId and IsActive = @isActive
+                    order by DateCreated desc",
+                    new { userId, isActive }).ToList();
+
+                return sightingList;
+            }
+
+            throw new Exception("No Sightings Found");
+        }
+
         public List<Sighting> SortMostPopular(List<Sighting> sightingList)
         {
             using (var db = new SqlConnection(_connectionString))
@@ -152,6 +170,8 @@ namespace MonsterMonitor.Data
                         if (userLike.IsLiked)
                         {
                             totalLikes++;
+                        } else
+                        {
                             totalDislikes++;
                         }
                     }
@@ -176,11 +196,19 @@ namespace MonsterMonitor.Data
             throw new Exception("No Sightings Found");
         }
 
-        public List<Sighting> FilterThreatLevel(List<Sighting> sightingList, string threatLevel)
+        public List<Sighting> FilterThreatLevel(string threatLevel)
         {
-            var filteredSightings = sightingList.Where(sighting => sighting.ThreatLevel == threatLevel).ToList();
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sightingList = db.Query<Sighting>(
+                    @"select *
+                    from Sightings
+                    where IsActive = 'true' and ThreatLevel = @threatLevel
+                    order by DateCreated desc",
+                    new { threatLevel }).ToList();
 
-            return filteredSightings;
+                return sightingList;
+            }
 
             throw new Exception("No Sightings Found");
         }

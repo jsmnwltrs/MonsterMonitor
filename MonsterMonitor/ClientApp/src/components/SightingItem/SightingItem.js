@@ -28,9 +28,9 @@ class SightingItem extends React.Component {
           alt="Card image cap"
         />
         <CardBody>
-          <CardTitle>{sighting.title}</CardTitle>
+          <CardTitle>{sighting.title} Date:{sighting.dateCreated}</CardTitle>
           <CardSubtitle>{sighting.threatLevel}</CardSubtitle>
-          <CardText>{sighting.description}</CardText>
+          <CardText>{sighting.description} Rating:{sighting.rating}</CardText>
         </CardBody>
       </Card>
     </div>
