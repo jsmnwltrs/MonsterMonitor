@@ -111,7 +111,6 @@ class Filters extends React.Component {
           <SearchField
             placeholder="Search sightings..."
             onChange={this.searchChange}
-            id='search'
           />
         </div>
         <div className='threat-container'>

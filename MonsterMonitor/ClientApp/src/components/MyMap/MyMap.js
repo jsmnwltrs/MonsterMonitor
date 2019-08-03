@@ -5,19 +5,28 @@ import {
   Marker,
   Popup,
 } from 'react-leaflet';
+import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
+import SearchField from 'react-search-field';
 import sightingRequests from '../../helpers/data/sightingRequests';
+import userRequests from '../../helpers/data/userRequests';
+import mapRequests from '../../helpers/data/mapRequests';
 import './MyMap.scss';
 
 class MyMap extends React.Component {
  state = {
    sightings: [],
+   user: [],
+   lat: 0,
+   long: 0,
  }
 
  componentDidMount() {
-   this.setStates();
+   this.setSightings();
+   this.setUser();
  }
 
- setStates = () => {
+ setSightings = () => {
    sightingRequests.getSightingsByIsActive(true)
      .then((sightings) => {
        this.setState({ sightings });
@@ -27,10 +36,63 @@ class MyMap extends React.Component {
      });
  }
 
- makeMarkers = () => {
+ setUser = () => {
+   userRequests.getUserByEmail()
+     .then((user) => {
+       this.setState({ user });
+       this.getUserCoordinates();
+     })
+     .catch((error) => {
+       console.error(error);
+     });
+ }
+
+ getUserCoordinates = () => {
+   const { user } = this.state;
+   mapRequests.getCoordinates(user.location).then((coordinates) => {
+     this.setState({ lat: coordinates.latitude, long: coordinates.longitude });
+     this.refs.map.leafletElement.panTo([coordinates.latitude, coordinates.longitude]);
+   }).catch((error) => {
+     console.error(error);
+   });
+ }
+
+ searchChange = (value, e) => {
+   e.preventDefault();
+   if (value !== '') {
+     mapRequests.getCoordinates(value).then((coordinates) => {
+       this.setState({ lat: coordinates.latitude, long: coordinates.longitude });
+       this.refs.map.leafletElement.panTo([coordinates.latitude, coordinates.longitude]);
+     }).catch((error) => {
+       console.error(error);
+     });
+   }
+ }
+
+ makeUserMarker = () => {
+   const { user, lat, long } = this.state;
+   const Profile = '/profile';
+   return <Marker
+   key={user.id}
+   position={[lat, long]}
+   >
+   <Popup className='pop-up'>
+   <img className='avatar' src={user.imageUrl} alt='avatar'></img>
+   Username: {user.username}
+   Location: {user.location}
+   <Link to={Profile}>
+    Profile Details
+    </Link>
+   </Popup>
+   </Marker>;
+ }
+
+ makeSightingMarkers = () => {
    const { sightings } = this.state;
-   const sightingMarkers = sightings.map(sighting => (
-    <Marker
+   const sightingMarkers = sightings.map((sighting) => {
+     const SightingDetails = `/sightingdetails/${sighting.id}`;
+     return (
+     <Marker
     key={sighting.id}
     position={[sighting.latitude, sighting.longitude]}
     >
@@ -38,18 +100,22 @@ class MyMap extends React.Component {
     Title: {sighting.title}
     Location: {sighting.location}
     Threat Level: {sighting.threatLevel}
+    <Link to={SightingDetails}>
+    Profile Details
+    </Link>
     </Popup>
-    </Marker>
-
-   ));
+     </Marker>
+     );
+   });
    return sightingMarkers;
  }
 
  render() {
-   return (
-      <div className = "map">
-        <Map
-        center={[50, 10]}
+   const { lat, long } = this.state;
+
+   const map = (
+    <Map
+        center={[lat, long]}
         zoom={6}
         maxZoom={10}
         attributionControl={true}
@@ -65,9 +131,24 @@ class MyMap extends React.Component {
             noWrap={true}
             url='https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.png'
           />
-          {this.makeMarkers()}
+          {this.makeSightingMarkers()}
+          {this.makeUserMarker()}
         </Map>
+   );
+
+   return (
+     <div>
+       <Button onClick={this.getUserCoordinates}>
+         Near Me
+       </Button>
+       <SearchField
+            placeholder="Search locations..."
+            onChange={this.searchChange}
+          />
+      <div className = "map">
+        {map}
       </div>
+    </div>
    );
  }
 }
