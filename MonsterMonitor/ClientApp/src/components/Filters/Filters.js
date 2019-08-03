@@ -17,6 +17,7 @@ class Filters extends React.Component {
 
   state = {
     results: [],
+    filteredResults: [],
     searchInput: '',
     dropdownOpen: false,
     dropdownValue: 'All',
@@ -27,9 +28,8 @@ class Filters extends React.Component {
     this.setSightings();
   }
 
-  setSightingResults = () => {
+  setSightingResults = (results) => {
     const { setResults } = this.props;
-    const { results } = this.state;
     setResults(results);
   }
 
@@ -57,7 +57,7 @@ class Filters extends React.Component {
       sightingRequests.getSightingsByThreatLevel(dropdownValue)
         .then((results) => {
           this.setState({ results });
-          this.setSightingResults();
+          this.setSightingResults(results);
         })
         .catch();
     }
@@ -69,9 +69,23 @@ class Filters extends React.Component {
     this.filterThreatLevel(dropdownValue);
   }
 
-  searchChange = (e) => {
-    const searchInput = e.target.value;
-    this.setState({ searchInput });
+  searchChange = (value, e) => {
+    const { results } = this.state;
+    const filteredResults = [];
+    e.preventDefault();
+    if (!value) {
+      this.setSightingResults(results);
+    } else {
+      results.forEach((result) => {
+        if (result.title.toLowerCase().includes(value.toLowerCase())
+        || result.description.toLowerCase().includes(value.toLowerCase())
+        || result.location.toLowerCase().includes(value.toLowerCase())) {
+          filteredResults.push(result);
+        }
+        this.setState({ filteredResults });
+        this.setSightingResults(filteredResults);
+      });
+    }
   }
 
   render() {
@@ -85,7 +99,6 @@ class Filters extends React.Component {
         return <div></div>;
       }
       return (<DropdownItem
-        id={threatLevel}
         value={threatLevel}
         onClick={this.changeThreatLevelValue}>
         {threatLevel}
@@ -98,7 +111,7 @@ class Filters extends React.Component {
           <SearchField
             placeholder="Search sightings..."
             onChange={this.searchChange}
-            classNames="test-class"
+            id='search'
           />
         </div>
         <div className='threat-container'>
