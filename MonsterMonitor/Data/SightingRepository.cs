@@ -150,13 +150,19 @@ namespace MonsterMonitor.Data
             throw new Exception("No Sightings Found");
         }
 
-        public List<Sighting> SortMostPopular(List<Sighting> sightingList)
+        public List<Sighting> MostPopular()
         {
             using (var db = new SqlConnection(_connectionString))
             {
                 var userLikeList = db.Query<UserLike>(
                    @"select *
                     from UserLikes").ToList();
+
+                var sightingList = db.Query<Sighting>(
+                    @"select *
+                    from Sightings
+                    where IsActive = 'true'
+                    order by DateCreated desc").ToList();
 
                 foreach (var sighting in sightingList)
                 {
@@ -179,7 +185,7 @@ namespace MonsterMonitor.Data
                     sighting.Rating = totalLikes - totalDislikes;
                 }
 
-                var sortedSightings = sightingList.OrderBy(sighting => sighting.Rating).ToList();
+                var sortedSightings = sightingList.OrderByDescending(sighting => sighting.Rating).Take(5).ToList();
 
                 return sortedSightings;
             }
@@ -187,11 +193,18 @@ namespace MonsterMonitor.Data
             throw new Exception("No Sightings Found");
         }
 
-        public List<Sighting> SortMostRecent(List<Sighting> sightingList)
+        public List<Sighting> MostRecent()
         {
-            var sortedSightings = sightingList.OrderBy(sighting => sighting.DateCreated).ToList();
+            using (var db = new SqlConnection(_connectionString))
+            {
+                var sightingList = db.Query<Sighting>(
+                    @"select top (5) *
+                    from Sightings
+                    where IsActive = 'true'
+                    order by DateCreated desc").ToList();
 
-            return sortedSightings;
+                return sightingList;
+            }
 
             throw new Exception("No Sightings Found");
         }

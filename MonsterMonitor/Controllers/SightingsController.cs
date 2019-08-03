@@ -85,18 +85,18 @@ namespace MonsterMonitor.Controllers
             return Ok(sightingResults);
         }
 
-        [HttpGet("sortByMostRecent")]
-        public ActionResult SortResultsByMostRecent(List<Sighting> sightingList)
+        [HttpGet("mostRecentSightings")]
+        public ActionResult getMostRecentSightings()
         {
-            var sightingResults = _sightingRepository.SortMostRecent(sightingList);
+            var sightingResults = _sightingRepository.MostRecent();
 
             return Ok(sightingResults);
         }
 
-        [HttpGet("sortByMostPopular")]
-        public ActionResult SortResultsByMostPopular(List<Sighting> sightingList)
+        [HttpGet("mostPopularSightings")]
+        public ActionResult getMostPopularSightings()
         {
-            var sightingResults = _sightingRepository.SortMostPopular(sightingList);
+            var sightingResults = _sightingRepository.MostPopular();
 
             return Ok(sightingResults);
         }
