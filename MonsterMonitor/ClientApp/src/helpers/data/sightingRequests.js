@@ -61,12 +61,12 @@ const getSightingsByThreatLevel = threatLevel => new Promise((resolve, reject) =
 });
 
 
-const sortByMostRecent = sightings => new Promise((resolve, reject) => {
-  axios.get(`${monApiBaseUrl}/sightings/sortByMostRecent`, sightings)
+const getMostRecent = () => new Promise((resolve, reject) => {
+  axios.get(`${monApiBaseUrl}/sightings/mostRecentSightings`)
     .then((result) => {
       if (result != null) {
-        const sortedSightings = result.data;
-        resolve(sortedSightings);
+        const sightings = result.data;
+        resolve(sightings);
       }
     })
     .catch((err) => {
@@ -74,12 +74,12 @@ const sortByMostRecent = sightings => new Promise((resolve, reject) => {
     });
 });
 
-const sortByMostPopular = sightings => new Promise((resolve, reject) => {
-  axios.get(`${monApiBaseUrl}/sightings/sortByMostPopular`, sightings)
+const getMostPopular = () => new Promise((resolve, reject) => {
+  axios.get(`${monApiBaseUrl}/sightings/mostPopularSightings`)
     .then((result) => {
       if (result != null) {
-        const sortedSightings = result.data;
-        resolve(sortedSightings);
+        const sightings = result.data;
+        resolve(sightings);
       }
     })
     .catch((err) => {
@@ -95,6 +95,6 @@ export default {
   getSightingsByIsActive,
   getSightingsByUserIdAndIsActive,
   getSightingsByThreatLevel,
-  sortByMostRecent,
-  sortByMostPopular,
+  getMostRecent,
+  getMostPopular,
 };
