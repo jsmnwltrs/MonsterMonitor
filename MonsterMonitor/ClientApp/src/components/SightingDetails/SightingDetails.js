@@ -3,6 +3,7 @@ import './SightingDetails.scss';
 import sightingRequests from '../../helpers/data/sightingRequests';
 import userRequests from '../../helpers/data/userRequests';
 import UserLike from '../UserLike/UserLike';
+import Comments from '../Comments/Comments';
 
 const defaultSighting = {
   id: 0,
@@ -71,6 +72,7 @@ class SightingDetails extends React.Component {
         <img src={sighting.imageUrl} alt='sighting pic'/>
         <p>{sighting.description}</p>
         <UserLike user={user} sighting={sighting}/>
+        <Comments sighting={sighting}/>
       </div>
     );
   }
