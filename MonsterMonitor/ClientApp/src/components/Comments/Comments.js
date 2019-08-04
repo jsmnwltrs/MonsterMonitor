@@ -15,6 +15,8 @@ class Comments extends React.Component {
     comments: [],
     currentUser: {},
     sightingId: 0,
+    isEditing: false,
+    commentToEdit: {},
   }
 
   componentWillReceiveProps(props) {
@@ -54,13 +56,29 @@ class Comments extends React.Component {
   }
 
   onSubmit = (commentObject) => {
-    commentRequests.addComment(commentObject)
-      .then(() => {
-        this.resetComments();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const { isEditing } = this.state;
+    if (isEditing) {
+      commentRequests.updateComment(commentObject)
+        .then(() => {
+          this.resetComments();
+          this.setState({ isEditing: false });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      commentRequests.addComment(commentObject)
+        .then(() => {
+          this.resetComments();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }
+
+  passCommentToEdit = (commentObject) => {
+    this.setState({ commentToEdit: commentObject, isEditing: true });
   }
 
   deleteComment = (commentId) => {
@@ -74,7 +92,12 @@ class Comments extends React.Component {
   }
 
   render() {
-    const { comments, currentUser } = this.state;
+    const {
+      comments,
+      currentUser,
+      isEditing,
+      commentToEdit,
+    } = this.state;
     const { sighting } = this.props;
 
     const commentItemComponents = comments.map(comment => (
@@ -83,6 +106,7 @@ class Comments extends React.Component {
         comment={comment}
         currentUser={currentUser}
         deleteComment={this.deleteComment}
+        passCommentToEdit={this.passCommentToEdit}
       />
     ));
 
@@ -93,7 +117,13 @@ class Comments extends React.Component {
           {commentItemComponents}
         </div>
         <div className='message-form'>
-          <CommentForm sighting={sighting} currentUser={currentUser} onSubmit={this.onSubmit}/>
+          <CommentForm
+            sighting={sighting}
+            currentUser={currentUser}
+            onSubmit={this.onSubmit}
+            isEditing={isEditing}
+            commentToEdit={commentToEdit}
+          />
         </div>
       </div>
     );

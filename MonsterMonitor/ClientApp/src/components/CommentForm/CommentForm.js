@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import './CommentForm.scss';
 import sightingShape from '../../helpers/props/sightingShape';
 import userShape from '../../helpers/props/userShape';
+import commentShape from '../../helpers/props/commentShape';
 
 const defaultComment = {
   userId: 0,
@@ -24,19 +25,42 @@ class CommentForm extends React.Component {
     sighting: sightingShape,
     currentUser: userShape,
     onSubmit: PropTypes.func,
+    commentToEdit: commentShape,
+    isEditing: PropTypes.bool,
   }
 
   state = {
     newComment: defaultComment,
   }
 
+  componentWillReceiveProps(props) {
+    if (props.isEditing) {
+      this.setCommentState(props.commentToEdit);
+    }
+  }
+
+  setCommentState = (comment) => {
+    const tempComment = { ...this.state.newComment };
+    tempComment.id = comment.id;
+    tempComment.userId = comment.userId;
+    tempComment.sightingId = comment.sightingId;
+    tempComment.dateCreated = comment.dateCreated;
+    tempComment.message = comment.message;
+    tempComment.isAnon = comment.isAnon;
+    this.setState({ newComment: tempComment });
+  }
+
   formSubmit = () => {
-    const { sighting, currentUser, onSubmit } = this.props;
+    const { isEditing, onSubmit } = this.props;
     const myComment = { ...this.state.newComment };
-    myComment.userId = currentUser.id;
-    myComment.sightingId = sighting.id;
-    myComment.dateCreated = new Date();
+    if (!isEditing) {
+      const { sighting, currentUser } = this.props;
+      myComment.userId = currentUser.id;
+      myComment.sightingId = sighting.id;
+      myComment.dateCreated = new Date();
+    }
     onSubmit(myComment);
+    this.setState({ newComment: defaultComment });
   }
 
   messageChange = (e) => {
@@ -63,6 +87,7 @@ class CommentForm extends React.Component {
               type="textarea"
               name="text"
               id="exampleText"
+              value={newComment.message}
               onChange={this.messageChange}
               />
           </Col>

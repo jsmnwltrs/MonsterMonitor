@@ -18,6 +18,7 @@ class CommentItem extends React.Component {
     comment: commentShape,
     currentUser: userShape,
     deleteComment: PropTypes.func,
+    passCommentToEdit: PropTypes.func,
   }
 
   state = {
@@ -41,6 +42,11 @@ class CommentItem extends React.Component {
   deleteCommentEvent = () => {
     const { comment, deleteComment } = this.props;
     deleteComment(comment.id);
+  }
+
+  updateCommentEvent = () => {
+    const { passCommentToEdit, comment } = this.props;
+    passCommentToEdit(comment);
   }
 
   render() {
