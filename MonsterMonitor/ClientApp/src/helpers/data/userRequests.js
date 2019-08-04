@@ -29,6 +29,17 @@ const getUserByEmail = () => new Promise((resolve, reject) => {
     });
 });
 
+const getUserById = userId => new Promise((resolve, reject) => {
+  axios.get(`${monApiBaseUrl}/users/byId/${userId}`)
+    .then((result) => {
+      const user = result.data;
+      resolve(user);
+    })
+    .catch((error) => {
+      reject(error);
+    });
+});
+
 const addUser = userObject => axios.post(`${monApiBaseUrl}/users/add`, userObject);
 
 const updateUser = userObject => axios.put(`${monApiBaseUrl}/users/update`, userObject);
@@ -38,4 +49,5 @@ export default {
   getUserByEmail,
   getAllUsers,
   updateUser,
+  getUserById,
 };
