@@ -1,25 +1,36 @@
 import React from 'react';
 import './CommentItem.scss';
 import commentShape from '../../helpers/props/commentShape';
+import userShape from '../../helpers/props/userShape';
 import userRequests from '../../helpers/data/userRequests';
+
+const defaultUser = {
+  id: 0,
+  username: '',
+  email: '',
+  imageUrl: '',
+  location: '',
+};
 
 class CommentItem extends React.Component {
   static propTypes = {
     comment: commentShape,
+    currentUser: userShape,
   }
 
   state = {
-    user: {},
+    user: defaultUser,
+    currentUser: defaultUser,
   }
 
   componentWillReceiveProps(props) {
-    this.setUserState(props.comment);
+    this.setUserState(props.comment, props.currentUser);
   }
 
-  setUserState(comment) {
+  setUserState(comment, currentUser) {
     userRequests.getUserById(comment.userId)
       .then((user) => {
-        this.setState({ user });
+        this.setState({ user, currentUser });
       }).catch((error) => {
         console.error(error);
       });
@@ -27,8 +38,32 @@ class CommentItem extends React.Component {
 
   render() {
     const { comment } = this.props;
-    const { user } = this.state;
+    const { user, currentUser } = this.state;
     const defaultImage = 'http://cdn.onlinewebfonts.com/svg/img_556571.png';
+
+    const makeButtons = () => {
+      if (user.id === currentUser.id) {
+        return (
+          <div>
+            <button className="btn btn-default" onClick={this.updateComment}>
+              <i class="far fa-edit"></i>
+            </button>
+            <button className="btn btn-default" onClick={this.deleteComment}>
+              <i className="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        );
+      }
+      return (
+        <div></div>
+      );
+    };
+
+    if (user.id === 0) {
+      return (
+        <div></div>
+      );
+    }
 
     if (comment.isAnon) {
       return (
@@ -37,6 +72,7 @@ class CommentItem extends React.Component {
         <p>Anonymous</p>
         <p>{comment.dateCreated}</p>
         <p>{comment.message}</p>
+        {makeButtons()}
       </div>
       );
     }
@@ -47,6 +83,7 @@ class CommentItem extends React.Component {
         <p>{user.username}</p>
         <p>{comment.dateCreated}</p>
         <p>{comment.message}</p>
+        {makeButtons()}
       </div>
     );
   }
