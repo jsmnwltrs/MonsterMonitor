@@ -63,6 +63,16 @@ class Comments extends React.Component {
       });
   }
 
+  deleteComment = (commentId) => {
+    commentRequests.deleteComment(commentId)
+      .then(() => {
+        this.resetComments();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   render() {
     const { comments, currentUser } = this.state;
     const { sighting } = this.props;
@@ -72,6 +82,7 @@ class Comments extends React.Component {
         key={comment.id}
         comment={comment}
         currentUser={currentUser}
+        deleteComment={this.deleteComment}
       />
     ));
 

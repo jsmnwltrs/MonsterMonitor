@@ -16,9 +16,9 @@ const getCommentsBySightingId = sightingId => new Promise((resolve, reject) => {
 
 const addComment = commentObject => axios.post(`${monApiBaseUrl}/comments/add`, commentObject);
 
-const updateComment = commentObject => axios.post(`${monApiBaseUrl}/comments/update`, commentObject);
+const updateComment = commentObject => axios.put(`${monApiBaseUrl}/comments/update`, commentObject);
 
-const deleteComment = commentId => axios.post(`${monApiBaseUrl}/comments/delete/${commentId}`);
+const deleteComment = commentId => axios.delete(`${monApiBaseUrl}/comments/delete/${commentId}`);
 
 export default {
   getCommentsBySightingId,

@@ -1,5 +1,6 @@
 import React from 'react';
 import './CommentItem.scss';
+import PropTypes from 'prop-types';
 import commentShape from '../../helpers/props/commentShape';
 import userShape from '../../helpers/props/userShape';
 import userRequests from '../../helpers/data/userRequests';
@@ -16,6 +17,7 @@ class CommentItem extends React.Component {
   static propTypes = {
     comment: commentShape,
     currentUser: userShape,
+    deleteComment: PropTypes.func,
   }
 
   state = {
@@ -36,6 +38,11 @@ class CommentItem extends React.Component {
       });
   }
 
+  deleteCommentEvent = () => {
+    const { comment, deleteComment } = this.props;
+    deleteComment(comment.id);
+  }
+
   render() {
     const { comment } = this.props;
     const { user, currentUser } = this.state;
@@ -45,10 +52,10 @@ class CommentItem extends React.Component {
       if (user.id === currentUser.id) {
         return (
           <div>
-            <button className="btn btn-default" onClick={this.updateComment}>
-              <i class="far fa-edit"></i>
+            <button className="btn btn-default" onClick={this.updateCommentEvent}>
+              <i className="far fa-edit"></i>
             </button>
-            <button className="btn btn-default" onClick={this.deleteComment}>
+            <button className="btn btn-default" onClick={this.deleteCommentEvent}>
               <i className="fas fa-trash-alt"></i>
             </button>
           </div>
