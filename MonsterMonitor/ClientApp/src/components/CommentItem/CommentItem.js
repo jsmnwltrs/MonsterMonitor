@@ -49,6 +49,10 @@ class CommentItem extends React.Component {
     passCommentToEdit(comment);
   }
 
+  goToProfile = () => {
+    this.props.history.push('/profile');
+  }
+
   render() {
     const { comment } = this.props;
     const { user, currentUser } = this.state;
@@ -78,22 +82,14 @@ class CommentItem extends React.Component {
       );
     }
 
-    if (comment.isAnon) {
-      return (
-      <div>
-        <img className='avatar' src={defaultImage} alt='avatar'/>
-        <p>Anonymous</p>
-        <p>{comment.dateCreated}</p>
-        <p>{comment.message}</p>
-        {makeButtons()}
-      </div>
-      );
-    }
-
     return (
       <div>
-        <img className='avatar' src={user.imageUrl} alt='avatar'/>
-        <p>{user.username}</p>
+        <img className='avatar'
+        src={(comment.isAnon) ? defaultImage : user.imageUrl}
+        alt='avatar'
+        onClick={(user.id === currentUser.id) ? this.goToProfile : ''}
+        />
+        <p>{(comment.isAnon) ? 'Anonymous' : user.username}</p>
         <p>{comment.dateCreated}</p>
         <p>{comment.message}</p>
         {makeButtons()}

@@ -57,8 +57,7 @@ class MyMap extends React.Component {
    });
  }
 
- searchChange = (value, e) => {
-   e.preventDefault();
+ searchLocation = (value, e) => {
    if (value !== '') {
      mapRequests.getCoordinates(value).then((coordinates) => {
        this.setState({ lat: coordinates.latitude, long: coordinates.longitude });
@@ -143,7 +142,8 @@ class MyMap extends React.Component {
        </Button>
        <SearchField
             placeholder="Search locations..."
-            onChange={this.searchChange}
+            onSearchClick={this.searchLocation}
+            onEnter={this.searchLocation}
           />
       <div className = "map">
         {map}

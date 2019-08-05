@@ -148,8 +148,7 @@ class UserCommentItem extends React.Component {
 
     return (
       <div>
-        <img className='avatar' src={(comment.isAnon === true) ? defaultImage : user.imageUrl} alt='avatar'/>
-        <p>{(comment.isAnon === true) ? 'Anonymous' : user.username}</p>
+        <p>{(comment.isAnon) ? 'Anonymous' : ''}</p>
         <p>{comment.dateCreated}</p>
         {makeForm()}
         {makeButtons()}

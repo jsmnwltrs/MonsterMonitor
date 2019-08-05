@@ -107,6 +107,7 @@ class Comments extends React.Component {
         currentUser={currentUser}
         deleteComment={this.deleteComment}
         passCommentToEdit={this.passCommentToEdit}
+        history={this.props.history}
       />
     ));
 
