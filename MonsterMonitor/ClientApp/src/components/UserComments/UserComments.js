@@ -44,6 +44,16 @@ class UserComments extends React.Component {
       });
   }
 
+  updateComment = (commentObject) => {
+    commentRequests.updateComment(commentObject)
+      .then(() => {
+        this.setComments();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   deleteComment = (commentId) => {
     commentRequests.deleteComment(commentId)
       .then(() => {
@@ -63,6 +73,7 @@ class UserComments extends React.Component {
         comment={comment}
         user={user}
         deleteComment={this.deleteComment}
+        updateComment={this.updateComment}
       />
     ));
 

@@ -1,6 +1,12 @@
 import React from 'react';
 import './UserCommentItem.scss';
 import PropTypes from 'prop-types';
+import {
+  FormGroup,
+  Col,
+  Input,
+  Label,
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import userShape from '../../helpers/props/userShape';
 import commentShape from '../../helpers/props/commentShape';
@@ -18,8 +24,8 @@ class UserCommentItem extends React.Component {
     newComment: {},
   }
 
-  componentWillReceiveProps(props) {
-    this.setComment(props.comment);
+  componentDidMount() {
+    this.setComment(this.props.comment);
   }
 
   setComment = (comment) => {
@@ -38,9 +44,11 @@ class UserCommentItem extends React.Component {
     deleteComment(comment.id);
   }
 
-  deleteCommentEvent = () => {
-    const { deleteComment, comment } = this.props;
-    deleteComment(comment.id);
+  updateCommentEvent = () => {
+    const { newComment } = this.state;
+    const { updateComment } = this.props;
+    updateComment(newComment);
+    this.setState({ isEditing: false });
   }
 
   showEditForm = () => {
@@ -51,9 +59,23 @@ class UserCommentItem extends React.Component {
     this.setState({ isEditing: false });
   }
 
+  messageChange = (e) => {
+    e.preventDefault();
+    const tempComment = { ...this.state.newComment };
+    tempComment.message = e.target.value;
+    this.setState({ newComment: tempComment });
+  }
+
+  isAnonChange = (e) => {
+    const tempComment = { ...this.state.newComment };
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    tempComment.isAnon = value;
+    this.setState({ newComment: tempComment });
+  }
+
   render() {
     const { comment, user } = this.props;
-    const { isEditing } = this.state;
+    const { isEditing, newComment } = this.state;
     const SightingDetails = `/sightingdetails/${comment.sightingId}`;
     const defaultImage = 'http://cdn.onlinewebfonts.com/svg/img_556571.png';
 
@@ -85,6 +107,38 @@ class UserCommentItem extends React.Component {
       );
     };
 
+    const makeForm = () => {
+      if (isEditing) {
+        return (
+          <div>
+            <FormGroup row>
+              <Col sm={10}>
+                <Input
+                  type="textarea"
+                  name="text"
+                  id="exampleText"
+                  value={newComment.message}
+                  onChange={this.messageChange}
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Label for="exampleIsAnon">Post as Anonymous</Label>
+                <Input
+                  type="checkbox"
+                  name="isAnon"
+                  id="exampleIsAnon"
+                  checked={newComment.isAnon}
+                  onChange={this.isAnonChange}
+                />
+            </FormGroup>
+          </div>
+        );
+      }
+      return (
+        <p>{comment.message}</p>
+      );
+    };
 
     if (user.id === 0) {
       return (
@@ -92,24 +146,12 @@ class UserCommentItem extends React.Component {
       );
     }
 
-    if (comment.isAnon) {
-      return (
-      <div>
-        <img className='avatar' src={defaultImage} alt='avatar'/>
-        <p>Anonymous</p>
-        <p>{comment.dateCreated}</p>
-        <p>{comment.message}</p>
-        {makeButtons()}
-      </div>
-      );
-    }
-
     return (
       <div>
-        <img className='avatar' src={user.imageUrl} alt='avatar'/>
-        <p>{user.username}</p>
+        <img className='avatar' src={(comment.isAnon === true) ? defaultImage : user.imageUrl} alt='avatar'/>
+        <p>{(comment.isAnon === true) ? 'Anonymous' : user.username}</p>
         <p>{comment.dateCreated}</p>
-        <p>{comment.message}</p>
+        {makeForm()}
         {makeButtons()}
       </div>
     );
