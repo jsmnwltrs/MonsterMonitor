@@ -101,7 +101,7 @@ class MyMap extends React.Component {
     Location: {sighting.location}
     Threat Level: {sighting.threatLevel}
     <Link to={SightingDetails}>
-    Profile Details
+    Sighting Details
     </Link>
     </Popup>
      </Marker>

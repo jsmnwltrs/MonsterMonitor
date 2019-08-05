@@ -4,7 +4,7 @@ import './Profile.scss';
 import userRequests from '../../helpers/data/userRequests';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import SightingManagement from '../SightingManagement/SightingManagement';
-
+import UserComments from '../UserComments/UserComments';
 
 const defaultUser = {
   id: 0,
@@ -49,7 +49,7 @@ class Profile extends React.Component {
 
     if (user.id === 0) {
       return (
-      <div></div>
+        <div></div>
       );
     }
 
@@ -65,6 +65,7 @@ class Profile extends React.Component {
           <p>{user.location}</p>
         </div>
         <SightingManagement userId={user.id} history={this.props.history}/>
+        <UserComments />
       </div>
     );
   }

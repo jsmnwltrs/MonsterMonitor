@@ -40,7 +40,7 @@ class MyNavbar extends React.Component {
     };
 
     return (
-      <div className="my-navbar">
+      <div className="my-navbar sticky-top">
         <Navbar color="dark" dark expand="md">
           <NavbarBrand href="/">Monster Monitor</NavbarBrand>
             {buildLinks()}
