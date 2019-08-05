@@ -11,6 +11,7 @@ import './SightingTable.scss';
 import sightingShape from '../../helpers/props/sightingShape';
 import SightingTableItem from '../SightingTableItem/SightingTableItem';
 import sightingRequests from '../../helpers/data/sightingRequests';
+import activeStatuses from '../../helpers/data/ActiveStatuses';
 
 class SightingTable extends React.Component {
   static propTypes = {
@@ -26,7 +27,7 @@ class SightingTable extends React.Component {
   state = {
     dropdownValue: 'All',
     dropdownOpen: false,
-    dropdownOptions: ['All', 'Active', 'Inactive'],
+    dropdownOptions: activeStatuses,
   }
 
   toggle = () => {
@@ -77,16 +78,16 @@ class SightingTable extends React.Component {
       />
     ));
 
-    const filterOptions = dropdownOptions.map((option) => {
-      if (dropdownValue === option) {
-        return <div></div>;
+    const filterOptions = dropdownOptions.map((activeStatus) => {
+      if (dropdownValue === activeStatus.option) {
+        return <div key={activeStatus.id}></div>;
       }
       return (
         <DropdownItem
-        id={option}
-        value={option}
+        key={activeStatus.id}
+        value={activeStatus.option}
         onClick={this.changeValue}>
-        {option}
+        {activeStatus.option}
         </DropdownItem>
       );
     });

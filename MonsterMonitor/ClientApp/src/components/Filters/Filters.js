@@ -67,7 +67,7 @@ class Filters extends React.Component {
           if (searchValue === '') {
             this.setSightingResults(results);
           } else {
-            this.searchChange(searchValue)
+            this.searchChange(searchValue);
           }
         })
         .catch();
@@ -83,7 +83,7 @@ class Filters extends React.Component {
   searchChange = (value, e) => {
     const { results } = this.state;
     const filteredResults = [];
-    this.setState({ searchValue: value })
+    this.setState({ searchValue: value });
     if (!value) {
       this.setSightingResults(results);
     } else {
@@ -107,7 +107,7 @@ class Filters extends React.Component {
 
     const threatLevelItems = threatLevels.map((threatLevel) => {
       if (dropdownValue === threatLevel) {
-        return <div></div>;
+        return <div key={threatLevel.id}></div>;
       }
       return (<DropdownItem
         value={threatLevel.option}

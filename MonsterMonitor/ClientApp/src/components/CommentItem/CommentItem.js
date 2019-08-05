@@ -50,7 +50,10 @@ class CommentItem extends React.Component {
   }
 
   goToProfile = () => {
-    this.props.history.push('/profile');
+    const { user, currentUser } = this.state;
+    if (user.id === currentUser.id) {
+      this.props.history.push('/profile');
+    }
   }
 
   render() {
@@ -87,7 +90,7 @@ class CommentItem extends React.Component {
         <img className='avatar'
         src={(comment.isAnon) ? defaultImage : user.imageUrl}
         alt='avatar'
-        onClick={(user.id === currentUser.id) ? this.goToProfile : ''}
+        onClick={this.goToProfile}
         />
         <p>{(comment.isAnon) ? 'Anonymous' : user.username}</p>
         <p>{comment.dateCreated}</p>
