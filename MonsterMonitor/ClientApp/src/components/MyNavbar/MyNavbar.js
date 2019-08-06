@@ -23,15 +23,15 @@ class MyNavbar extends React.Component {
         return (
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink tag={RRNavLink} to='/profile'>Profile</NavLink>
+              <NavLink className='m-2 icon' tag={RRNavLink} to='/profile'><i className="fas fa-user-alt"></i></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to='/map'>Map</NavLink>
+              <NavLink className='m-2 icon' tag={RRNavLink} to='/map'><i className="fas fa-map-marked-alt"></i></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to='/browse'>Browse</NavLink>
+              <NavLink className='m-2 icon' tag={RRNavLink} to='/browse'><i class="fas fa-search"></i></NavLink>
             </NavItem>
-            <NavLink className='logout-link' onClick={logoutClick}>Logout</NavLink>
+            <NavLink className='m-2 icon' onClick={logoutClick}><i class="fas fa-sign-out-alt"></i></NavLink>
           </Nav>
         );
       }
@@ -47,8 +47,7 @@ class MyNavbar extends React.Component {
         <Navbar color="dark" dark expand="md">
           <NavLink tag={RRNavLink} to='/home'>
             <img
-              width='75px'
-              height='50px'
+              className='logo'
               src="https://cdn140.picsart.com/300890030463211.png?r640x640"
               alt='logo'
             />
