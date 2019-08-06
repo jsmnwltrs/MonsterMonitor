@@ -6,7 +6,7 @@ import {
   Popup,
 } from 'react-leaflet';
 import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import SearchField from 'react-search-field';
 import sightingRequests from '../../helpers/data/sightingRequests';
 import userRequests from '../../helpers/data/userRequests';
@@ -137,17 +137,26 @@ class MyMap extends React.Component {
 
    return (
      <div>
-       <Button onClick={this.getUserCoordinates}>
-         Near Me
-       </Button>
-       <SearchField
-            placeholder="Search locations..."
-            onSearchClick={this.searchLocation}
-            onEnter={this.searchLocation}
-          />
-      <div className = "map">
+      <Row>
+      <Col className="col-9">
         {map}
-      </div>
+      </Col>
+      <Col className='col-3 mt-4'>
+      <Row className='m-3'>
+        <SearchField
+          classNames='search-field'
+          placeholder="Search locations..."
+          onSearchClick={this.searchLocation}
+          onEnter={this.searchLocation}
+        />
+      </Row>
+        <Row className='m-3'>
+          <Button className='nearme-button' onClick={this.getUserCoordinates}>
+            Near Me
+          </Button>
+        </Row>
+      </Col>
+      </Row>
     </div>
    );
  }
