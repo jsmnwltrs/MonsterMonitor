@@ -26,7 +26,8 @@ class CommentItem extends React.Component {
     currentUser: defaultUser,
   }
 
-  componentWillReceiveProps(props) {
+  constructor(props) {
+    super(props);
     this.setUserState(props.comment, props.currentUser);
   }
 

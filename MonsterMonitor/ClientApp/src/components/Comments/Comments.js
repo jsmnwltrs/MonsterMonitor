@@ -6,6 +6,14 @@ import CommentItem from '../CommentItem/CommentItem';
 import CommentForm from '../CommentForm/CommentForm';
 import sightingShape from '../../helpers/props/sightingShape';
 
+const defaultUser = {
+  id: 0,
+  username: '',
+  email: '',
+  imageUrl: '',
+  location: '',
+};
+
 class Comments extends React.Component {
   static propTypes = {
     sighting: sightingShape,
@@ -13,7 +21,7 @@ class Comments extends React.Component {
 
   state = {
     comments: [],
-    currentUser: {},
+    currentUser: defaultUser,
     sightingId: 0,
     isEditing: false,
     commentToEdit: {},
@@ -100,22 +108,29 @@ class Comments extends React.Component {
     } = this.state;
     const { sighting } = this.props;
 
-    const commentItemComponents = comments.map(comment => (
-      <CommentItem
-        key={comment.id}
-        comment={comment}
-        currentUser={currentUser}
-        deleteComment={this.deleteComment}
-        passCommentToEdit={this.passCommentToEdit}
-        history={this.props.history}
-      />
-    ));
+    const makeComments = () => {
+      const commentItemComponents = comments.map(comment => (
+        <CommentItem
+          key={comment.id}
+          comment={comment}
+          currentUser={currentUser}
+          deleteComment={this.deleteComment}
+          passCommentToEdit={this.passCommentToEdit}
+          history={this.props.history}
+        />
+      ));
+      return commentItemComponents;
+    };
+
+    if (currentUser.id === 0) {
+      return <div></div>;
+    }
 
     return (
       <div>
         <h2>Comments</h2>
         <div className='message-board'>
-          {commentItemComponents}
+          {makeComments()}
         </div>
         <div className='message-form'>
           <CommentForm
