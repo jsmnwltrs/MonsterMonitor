@@ -93,6 +93,7 @@ class Comments extends React.Component {
     commentRequests.deleteComment(commentId)
       .then(() => {
         this.resetComments();
+        this.setState({ isEditing: false });
       })
       .catch((error) => {
         console.error(error);
