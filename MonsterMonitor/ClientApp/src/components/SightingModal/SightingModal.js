@@ -139,7 +139,7 @@ class SightingModal extends React.Component {
 
     return (
         <div>
-          <Button onClick={this.openAddModal}>Add New Sighting</Button>
+          <Button className='' onClick={this.openAddModal}><i className="fas fa-plus"></i></Button>
           <Modal isOpen={modal}>
             <ModalHeader>
             {(this.props.isEditing === true) ? 'Edit Sighting' : 'Add Sighting'}

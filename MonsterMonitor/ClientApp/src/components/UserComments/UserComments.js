@@ -85,8 +85,12 @@ class UserComments extends React.Component {
 
     return (
       <div>
-        <h2>User Comments</h2>
-        {userCommentItemComponents}
+        <div className='comment-container'>
+        <div className='header'><h2>Your Comments</h2></div>
+        <div className='commentItem-container'>
+          {userCommentItemComponents}
+        </div>
+        </div>
       </div>
     );
   }

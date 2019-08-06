@@ -42,14 +42,14 @@ class SightingTableItem extends React.Component {
     const makeButtons = () => {
       if (sighting.isActive) {
         return (
-          <button className="btn btn-default" onClick={this.deactivateSighting}>
-            <i className="fas fa-trash-alt"></i>
+          <button className="btn" onClick={this.deactivateSighting}>
+            <i className="fas fa-trash-alt buttons"></i>
           </button>
         );
       }
       return (
-        <button className="btn btn-default" onClick={this.reactivateSighting}>
-          <i className="fas fa-plus-square"></i>
+        <button className="btn" onClick={this.reactivateSighting}>
+          <i className="fas fa-undo-alt buttons"></i>
         </button>
       );
     };
@@ -63,7 +63,7 @@ class SightingTableItem extends React.Component {
         <td>{(sighting.isAnon === true) ? 'Yes' : 'No' }</td>
         <td>
           <button className="btn btn-default" onClick={this.showEditForm}>
-              <i className="fas fa-pencil-alt"></i>
+              <i className="far fa-edit buttons"></i>
           </button>
           {makeButtons()}
           </td>

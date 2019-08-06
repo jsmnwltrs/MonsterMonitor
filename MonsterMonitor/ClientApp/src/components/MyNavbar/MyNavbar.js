@@ -29,9 +29,9 @@ class MyNavbar extends React.Component {
               <NavLink className='m-2 icon' tag={RRNavLink} to='/map'><i className="fas fa-map-marked-alt"></i></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='m-2 icon' tag={RRNavLink} to='/browse'><i class="fas fa-search"></i></NavLink>
+              <NavLink className='m-2 icon' tag={RRNavLink} to='/browse'><i className="fas fa-search"></i></NavLink>
             </NavItem>
-            <NavLink className='m-2 icon' onClick={logoutClick}><i class="fas fa-sign-out-alt"></i></NavLink>
+            <NavLink className='m-2 icon' onClick={logoutClick}><i className="fas fa-sign-out-alt"></i></NavLink>
           </Nav>
         );
       }
