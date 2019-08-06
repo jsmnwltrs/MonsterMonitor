@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { NavLink as RRNavLink } from 'react-router-dom';
 import {
   Navbar,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
@@ -39,11 +38,22 @@ class MyNavbar extends React.Component {
       return <div></div>;
     };
 
+    if (!isAuthed) {
+      return <div></div>;
+    }
+
     return (
       <div className="my-navbar sticky-top">
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="/">Monster Monitor</NavbarBrand>
-            {buildLinks()}
+          <NavLink tag={RRNavLink} to='/home'>
+            <img
+              width='75px'
+              height='50px'
+              src="https://cdn140.picsart.com/300890030463211.png?r640x640"
+              alt='logo'
+            />
+          </NavLink>
+          {buildLinks()}
         </Navbar>
       </div>
     );

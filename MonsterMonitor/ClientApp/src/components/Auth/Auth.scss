@@ -1,0 +1,29 @@
+
+.login-container {
+  .app-title {
+    font-family: 'Nosifer', cursive;
+    font-size: 55px;
+    }
+
+  .app-logo {
+    width: 500px;
+    height: 340px;
+  }
+  
+  .login-button:hover {
+    background-color: rgb(53, 53, 53);
+    border-radius: 15px;
+  }
+
+  .login-button {
+    background-color: black;
+    border-radius: 15px;
+
+    .google-logo {
+      height: 50px;
+      width:50px;
+    }
+  }
+}
+
+

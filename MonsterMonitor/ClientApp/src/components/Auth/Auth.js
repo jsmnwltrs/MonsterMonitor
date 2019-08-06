@@ -21,18 +21,29 @@ class Auth extends React.Component {
 
     render() {
       return (
-            <Container className="Login">
-                    <div className="">
-                        <Button
-                        type="submit"
-                        className="btn col-xs-12 mr-2"
-                        onClick={this.loginClickEvent}
-                        color="primary"
-                        >
-                        Login
-                        </Button>
-                    </div>
-            </Container>
+        <Container className="login-container">
+          <div className='d-flex justify-content-center'>
+            <img className='app-logo m-2' src='https://cdn140.picsart.com/300890030463211.png?r640x640' alt='logo'/>
+          </div>
+          <div className='d-flex justify-content-center m-3'>
+            <h1 className='app-title'>Monster Monitor</h1>
+          </div>
+          <div className='d-flex justify-content-center m-3'>
+            <Button
+              type="submit"
+              className="btn login-button m-4"
+              onClick={this.loginClickEvent}
+              color='secondary'
+            >
+            <img
+              className='google-logo mr-2'
+              src='https://yokoent.com/images/google-logo-png-circle-15.png'
+              alt='google-logo'
+            />
+            Login with Google
+            </Button>
+          </div>
+        </Container>
       );
     }
 }
