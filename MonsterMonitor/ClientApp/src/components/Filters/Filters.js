@@ -9,6 +9,7 @@ import {
 import './Filters.scss';
 import PropTypes from 'prop-types';
 import sightingRequests from '../../helpers/data/sightingRequests';
+import threatLevelsArray from '../../helpers/data/threatLevels';
 
 class Filters extends React.Component {
   static propTypes = {
@@ -18,10 +19,10 @@ class Filters extends React.Component {
   state = {
     results: [],
     filteredResults: [],
-    searchInput: '',
+    searchValue: '',
     dropdownOpen: false,
     dropdownValue: 'All',
-    threatLevels: ['Safe', 'Unknown', 'Risky', 'Dangerous', 'Fatal', 'All'],
+    threatLevels: threatLevelsArray,
   }
 
   componentDidMount() {
@@ -34,10 +35,15 @@ class Filters extends React.Component {
   }
 
   setSightings = () => {
+    const { searchValue } = this.state;
     sightingRequests.getSightingsByIsActive(true)
       .then((results) => {
         this.setState({ results });
-        this.setSightingResults(results);
+        if (searchValue === '') {
+          this.setSightingResults(results);
+        } else {
+          this.searchChange(searchValue);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -51,13 +57,18 @@ class Filters extends React.Component {
   }
 
   filterThreatLevel = (dropdownValue) => {
+    const { searchValue } = this.state;
     if (dropdownValue === 'All') {
       this.setSightings();
     } else {
       sightingRequests.getSightingsByThreatLevel(dropdownValue)
         .then((results) => {
           this.setState({ results });
-          this.setSightingResults(results);
+          if (searchValue === '') {
+            this.setSightingResults(results);
+          } else {
+            this.searchChange(searchValue);
+          }
         })
         .catch();
     }
@@ -72,7 +83,7 @@ class Filters extends React.Component {
   searchChange = (value, e) => {
     const { results } = this.state;
     const filteredResults = [];
-    e.preventDefault();
+    this.setState({ searchValue: value });
     if (!value) {
       this.setSightingResults(results);
     } else {
@@ -96,12 +107,13 @@ class Filters extends React.Component {
 
     const threatLevelItems = threatLevels.map((threatLevel) => {
       if (dropdownValue === threatLevel) {
-        return <div></div>;
+        return <div key={threatLevel.id}></div>;
       }
       return (<DropdownItem
-        value={threatLevel}
+        value={threatLevel.option}
+        key={threatLevel.id}
         onClick={this.changeThreatLevelValue}>
-        {threatLevel}
+        {threatLevel.option}
         </DropdownItem>);
     });
 

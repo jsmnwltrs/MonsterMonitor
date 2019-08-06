@@ -77,7 +77,6 @@ class UserCommentItem extends React.Component {
     const { comment, user } = this.props;
     const { isEditing, newComment } = this.state;
     const SightingDetails = `/sightingdetails/${comment.sightingId}`;
-    const defaultImage = 'http://cdn.onlinewebfonts.com/svg/img_556571.png';
 
     const makeButtons = () => {
       if (isEditing) {
@@ -148,8 +147,7 @@ class UserCommentItem extends React.Component {
 
     return (
       <div>
-        <img className='avatar' src={(comment.isAnon === true) ? defaultImage : user.imageUrl} alt='avatar'/>
-        <p>{(comment.isAnon === true) ? 'Anonymous' : user.username}</p>
+        <p>{(comment.isAnon) ? 'Anonymous' : ''}</p>
         <p>{comment.dateCreated}</p>
         {makeForm()}
         {makeButtons()}

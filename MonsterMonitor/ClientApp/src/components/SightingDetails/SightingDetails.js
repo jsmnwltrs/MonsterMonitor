@@ -72,7 +72,7 @@ class SightingDetails extends React.Component {
         <img src={sighting.imageUrl} alt='sighting pic'/>
         <p>{sighting.description}</p>
         <UserLike user={user} sighting={sighting}/>
-        <Comments sighting={sighting}/>
+        <Comments sighting={sighting} history={this.props.history}/>
       </div>
     );
   }

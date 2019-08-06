@@ -14,31 +14,33 @@ class UserLike extends React.Component {
     totalLikes: 0,
     totalDislikes: 0,
     userLike: {},
+    ready: false,
   }
 
   componentWillReceiveProps(props) {
-    this.setUserLike(props);
-    this.setTotals(props);
+    if (props.user.id !== 0 && props.sighting.id !== 0) {
+      this.setUserLike(props);
+    }
   }
 
   setUserLike = (props) => {
     const { sighting, user } = props;
     userLikeRequests.getUserLikeBySightingIdAndUserId(sighting.id, user.id)
       .then((userLike) => {
-        this.setState({ userLike, ready: true });
+        this.setState({ userLike });
+        this.setTotals(props.sighting);
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  setTotals = (props) => {
-    const { sighting } = props;
+  setTotals = (sighting) => {
     userLikeRequests.getUserLikesBySightingId(sighting.id)
       .then((userLikes) => {
         const totalLikes = userLikes.filter(userLike => userLike.isLiked === true).length;
         const totalDislikes = userLikes.filter(userLike => userLike.isLiked === false).length;
-        this.setState({ totalLikes, totalDislikes });
+        this.setState({ totalLikes, totalDislikes, ready: true });
       })
       .catch();
   }
@@ -62,6 +64,7 @@ class UserLike extends React.Component {
     userLikeRequests.addUserLike(tempUserLike)
       .then((userLike) => {
         this.setState({ userLike });
+        this.setTotals(sighting);
       })
       .catch((error) => {
         console.error(error);
@@ -69,11 +72,13 @@ class UserLike extends React.Component {
   }
 
   updateUserLike = (bool) => {
+    const { sighting } = this.props;
     const tempUserLike = { ...this.state.userLike };
     tempUserLike.isLiked = bool;
     userLikeRequests.updateUserLike(tempUserLike)
       .then((userLike) => {
         this.setState({ userLike });
+        this.setTotals(sighting);
       })
       .catch((error) => {
         console.error(error);
@@ -82,9 +87,11 @@ class UserLike extends React.Component {
 
   deleteEvent = () => {
     const { userLike } = this.state;
+    const { sighting } = this.props;
     userLikeRequests.deleteUserLike(userLike.id)
       .then(() => {
         this.setState({ userLike: '' });
+        this.setTotals(sighting);
       })
       .catch((error) => {
         console.error(error);
@@ -92,7 +99,7 @@ class UserLike extends React.Component {
   }
 
   render() {
-    const { userLike } = this.state;
+    const { userLike, ready } = this.state;
 
     const makeButtons = () => {
       if (userLike.isLiked) {
@@ -132,6 +139,10 @@ class UserLike extends React.Component {
         </div>
       );
     };
+
+    if (!ready) {
+      return <div></div>;
+    }
 
     return (
       <div>
