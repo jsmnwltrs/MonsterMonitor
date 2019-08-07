@@ -43,27 +43,27 @@ class SightingTableItem extends React.Component {
       if (sighting.isActive) {
         return (
           <button className="btn" onClick={this.deactivateSighting}>
-            <i className="fas fa-trash-alt buttons"></i>
+            <i className="fas fa-trash-alt"></i>
           </button>
         );
       }
       return (
         <button className="btn" onClick={this.reactivateSighting}>
-          <i className="fas fa-undo-alt buttons"></i>
+          <i className="fas fa-undo-alt"></i>
         </button>
       );
     };
 
     return (
       <tr className="sighting-item">
-        <th onClick={this.goToSightingDetails}>{sighting.title}</th>
-        <th>{sighting.location}</th>
+        <td onClick={this.goToSightingDetails}>{sighting.title}</td>
+        <td>{sighting.location}</td>
         <td>{sighting.threatLevel}</td>
         <td>{(sighting.isActive === true) ? 'Active' : 'Inactive'}</td>
         <td>{(sighting.isAnon === true) ? 'Yes' : 'No' }</td>
         <td>
           <button className="btn btn-default" onClick={this.showEditForm}>
-              <i className="far fa-edit buttons"></i>
+              <i className="far fa-edit"></i>
           </button>
           {makeButtons()}
           </td>

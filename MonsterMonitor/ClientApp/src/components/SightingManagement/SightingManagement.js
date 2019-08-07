@@ -69,12 +69,21 @@ class SightingManagement extends React.Component {
 
   onSubmitSighting = (sightingObject) => {
     if (this.state.isEditing) {
-      sightingRequests.updateSighting(sightingObject);
-      this.setState({ isEditing: false });
-      this.setSightings();
+      sightingRequests.updateSighting(sightingObject)
+        .then(() => {
+          this.setState({ isEditing: false });
+          this.setSightings();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } else {
-      sightingRequests.addSighting(sightingObject);
-      this.setSightings();
+      sightingRequests.addSighting(sightingObject)
+        .then(() => {
+          this.setSightings();
+        }).catch((error) => {
+          console.error(error);
+        });
     }
   }
 

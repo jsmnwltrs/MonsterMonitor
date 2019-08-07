@@ -64,10 +64,10 @@ class Profile extends React.Component {
     return (
       <div>
         <Row className='m-5'>
-          <Col className='col-1'></Col>
-          <Col className='profile-container col-2'>
+          <Col className='profile-container col-3'>
             <Card className='d-flex justify-content-center'>
-              <Row className='d-flex justify-content-center mt-3'>
+              <h2 className='profile-header'>Your Profile</h2>
+              <Row className='d-flex justify-content-center mt-1'>
               <CardImg top width="100%" className='profile-avatar' src={user.imageUrl} alt='profile-avatar' />
               </Row>
               <CardBody>
@@ -78,10 +78,9 @@ class Profile extends React.Component {
             </Card>
           </Col>
           <Col className='col-1'></Col>
-          <Col className='comments-container col-7'>
+          <Col className='comments-container col-8'>
           <UserComments />
           </Col>
-          <Col className='col-1'></Col>
         </Row>
         <SightingManagement userId={user.id} history={this.props.history}/>
       </div>

@@ -10,10 +10,16 @@ import {
   FormGroup,
   Label,
   Input,
+  CustomInput,
+  DropdownItem,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import sightingShape from '../../helpers/props/sightingShape';
 import mapRequests from '../../helpers/data/mapRequests';
+import threatLevelsArray from '../../helpers/data/threatLevels';
 
 const defaultSighting = {
   userId: 0,
@@ -42,12 +48,21 @@ class SightingModal extends React.Component {
   state = {
     newSighting: defaultSighting,
     modal: false,
+    dropdownValue: 'Unknown',
+    threatLevels: threatLevelsArray,
+    dropdownOpen: false,
   }
 
   componentWillReceiveProps(props) {
     if (props.isEditing) {
       this.openEditModal(props.sighting);
     }
+  }
+
+  toggle = () => {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
   }
 
   closeModal = () => {
@@ -75,6 +90,7 @@ class SightingModal extends React.Component {
     this.setState(prevState => ({
       modal: !prevState.modal,
       newSighting: tempSighting,
+      dropdownValue: sighting.threatLevel,
     }));
   }
 
@@ -133,13 +149,39 @@ class SightingModal extends React.Component {
     this.setState({ newSighting: tempSighting });
   }
 
+  changeThreatLevelValue = (e) => {
+    const tempSighting = { ...this.state.newSighting };
+    tempSighting.threatLevel = e.target.value;
+    const dropdownValue = e.target.value;
+    this.setState({ newSighting: tempSighting, dropdownValue });
+  }
 
   render() {
-    const { newSighting, modal } = this.state;
+    const {
+      newSighting,
+      modal,
+      threatLevels,
+      dropdownValue,
+    } = this.state;
+
+    const threatLevelItems = threatLevels.map((threatLevel) => {
+      if (dropdownValue === threatLevel.option) {
+        return <div key={threatLevel.id}></div>;
+      }
+      if (threatLevel.option === 'All') {
+        return <div key={threatLevel.id}></div>;
+      }
+      return (<DropdownItem
+        value={threatLevel.option}
+        key={threatLevel.id}
+        onClick={this.changeThreatLevelValue}>
+        {threatLevel.option}
+        </DropdownItem>);
+    });
 
     return (
         <div>
-          <Button className='' onClick={this.openAddModal}><i className="fas fa-plus"></i></Button>
+          <Button className='' onClick={this.openAddModal}>Add New Sighting</Button>
           <Modal isOpen={modal}>
             <ModalHeader>
             {(this.props.isEditing === true) ? 'Edit Sighting' : 'Add Sighting'}
@@ -147,14 +189,15 @@ class SightingModal extends React.Component {
             <ModalBody>
               <Form>
                 <FormGroup>
-                  <Input
+                  <CustomInput
+                    inline
+                    label='Post as Anonymous'
                     type="checkbox"
                     name="isAnon"
-                    id="exampleIsAnon"
+                    id="exampleCustomInline"
                     checked={newSighting.isAnon}
                     onChange={this.isAnonChange}
                   />
-                  <Label for="exampleIsAnon">Post as Anonymous</Label>
                 </FormGroup>
                 <FormGroup>
                   <Label for="exampleTitle">Title:</Label>
@@ -168,15 +211,15 @@ class SightingModal extends React.Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="exampleThreatLevel">Threat Level</Label>
-                  <Input
-                    type="threatLevel"
-                    name="threatLevel"
-                    id="exampleThreatLevel"
-                    placeholder="sighting threat level"
-                    value={newSighting.threatLevel}
-                    onChange={this.threatLevelChange}
-                  />
+                  <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    Threat Level:
+                  <DropdownToggle caret>
+                    {dropdownValue}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {threatLevelItems}
+                  </DropdownMenu>
+                  </Dropdown>
                 </FormGroup>
                 <FormGroup>
                   <Label for="exampleLocation">Location:</Label>

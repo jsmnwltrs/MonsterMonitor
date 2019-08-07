@@ -33,8 +33,8 @@ class SightingTable extends React.Component {
     ));
 
     return (
-      <div>
-        <Table dark>
+      <div className='sighting-table'>
+        <Table>
           <thead>
             <tr>
               <th>Title</th>
@@ -45,7 +45,7 @@ class SightingTable extends React.Component {
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='sighting-items'>
             {sightingTableItemComponents}
           </tbody>
         </Table>
