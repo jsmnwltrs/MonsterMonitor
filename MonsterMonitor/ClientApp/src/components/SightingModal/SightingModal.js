@@ -213,7 +213,7 @@ class SightingModal extends React.Component {
                 <FormGroup>
                   <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     Threat Level:
-                  <DropdownToggle caret>
+                  <DropdownToggle className='ml-2' caret>
                     {dropdownValue}
                   </DropdownToggle>
                   <DropdownMenu>
@@ -221,7 +221,7 @@ class SightingModal extends React.Component {
                   </DropdownMenu>
                   </Dropdown>
                 </FormGroup>
-                <FormGroup>
+                <FormGroup row>
                   <Label for="exampleLocation">Location:</Label>
                   <Input
                     type="location"
