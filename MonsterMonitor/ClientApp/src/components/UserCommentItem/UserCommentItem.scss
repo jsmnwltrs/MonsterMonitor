@@ -1,9 +1,21 @@
 .comment-card {
-    border: 2px solid black;
-    color: white;
+    color: black;
+
+  .comment-date {
+    font-size: 20px;
+  }
+  
+  .comment-isAnon {
+    font-size: 15px;
+  }
+
   .message-container {
     border: 2px solid gray;
     background-color: white;
+    color: black;
+  }
+
+  a {
     color: black;
   }
 }

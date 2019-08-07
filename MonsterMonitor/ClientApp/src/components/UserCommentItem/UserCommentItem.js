@@ -102,7 +102,7 @@ class UserCommentItem extends React.Component {
           <button className="btn btn-default" onClick={this.showEditForm}>
             <i className="far fa-edit"></i>
           </button>
-          <button className="btn btn-default" onClick={this.deleteCommentEvent}>
+          <button className="btn btn-default mb-1" onClick={this.deleteCommentEvent}>
             <i className="fas fa-trash-alt"></i>
           </button>
           <div>
@@ -159,10 +159,10 @@ class UserCommentItem extends React.Component {
 
     return (
       <div className='comment-card'>
-        <Card inverse style={{ backgroundColor: 'gray', borderColor: 'white' }}>
+        <Card style={{ backgroundColor: 'rgb(209, 206, 206)', borderColor: 'black' }}>
         <CardBody>
           <CardTitle className='comment-date'>{moment(comment.dateCreated).format('MMMM Do YYYY, h:mma')}</CardTitle>
-          <CardSubtitle className='text-danger'>{(comment.isAnon) ? 'Anonymous' : 'Public'}</CardSubtitle>
+          <CardSubtitle className='comment-isAnon'><strong>{(comment.isAnon) ? 'Anonymous' : 'Public'}</strong></CardSubtitle>
           <CardText>{makeForm()}</CardText>
           {makeButtons()}
         </CardBody>

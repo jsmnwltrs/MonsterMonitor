@@ -48,7 +48,7 @@ class MyNavbar extends React.Component {
           <NavLink tag={RRNavLink} to='/home'>
             <img
               className='logo'
-              src="https://cdn140.picsart.com/300890030463211.png?r640x640"
+              src='https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/mouth.png?alt=media&token=4a1af8d9-12cd-4ebb-944e-0a617a7c9dcd'
               alt='logo'
             />
           </NavLink>

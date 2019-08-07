@@ -15,6 +15,7 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
+  Col,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import sightingShape from '../../helpers/props/sightingShape';
@@ -199,8 +200,9 @@ class SightingModal extends React.Component {
                     onChange={this.isAnonChange}
                   />
                 </FormGroup>
-                <FormGroup>
-                  <Label for="exampleTitle">Title:</Label>
+                <FormGroup row>
+                  <Label sm={2} for="exampleTitle">Title:</Label>
+                  <Col sm={10}>
                   <Input
                     type="title"
                     name="title"
@@ -209,6 +211,20 @@ class SightingModal extends React.Component {
                     value={newSighting.title}
                     onChange={this.titleChange}
                   />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={2} for="exampleImageUrl">Image:</Label>
+                  <Col sm={10}>
+                  <Input
+                    type="imageUrl"
+                    name="imageUrl"
+                    id="exampleImageUrl"
+                    placeholder="sighting image url"
+                    value={newSighting.imageUrl}
+                    onChange={this.imageUrlChange}
+                  />
+                  </Col>
                 </FormGroup>
                 <FormGroup>
                   <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -222,7 +238,21 @@ class SightingModal extends React.Component {
                   </Dropdown>
                 </FormGroup>
                 <FormGroup row>
-                  <Label for="exampleLocation">Location:</Label>
+                  <Label sm={2} for="exampleDescription">Desc:</Label>
+                  <Col sm={10}>
+                  <Input
+                    type="textarea"
+                    name="description"
+                    id="exampleDescription"
+                    placeholder="sighting description"
+                    value={newSighting.description}
+                    onChange={this.descriptionChange}
+                  />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={2} for="exampleLocation">Location:</Label>
+                  <Col sm={10}>
                   <Input
                     type="location"
                     name="location"
@@ -231,50 +261,22 @@ class SightingModal extends React.Component {
                     value={newSighting.location}
                     onChange={this.locationChange}
                   />
+                  </Col>
                 </FormGroup>
-                <FormGroup className='d-flex justify-content-between'>
+                <FormGroup className='ml-6'>
                   <Button onClick={this.generateCoordinates}>Generate Coordinates</Button>
-                  <Label className='m-6'>Longitude: <p>{newSighting.longitude}</p></Label>
-                  <Label className='m-6'>Latitude: <p>{newSighting.latitude}</p></Label>
                 </FormGroup>
-                <FormGroup>
-                  <Label for="exampleDescription">Description:</Label>
-                  <Input
-                    type="description"
-                    name="description"
-                    id="exampleDescription"
-                    placeholder="sighting description"
-                    value={newSighting.description}
-                    onChange={this.descriptionChange}
-                  />
+                <FormGroup className='ml-6'>
+                <Label>Latitude: {newSighting.latitude}</Label>
                 </FormGroup>
-                <FormGroup>
-                  <Label for="exampleImageUrl">Image URL:</Label>
-                  <Input
-                    type="imageUrl"
-                    name="imageUrl"
-                    id="exampleImageUrl"
-                    placeholder="sighting image url"
-                    value={newSighting.imageUrl}
-                    onChange={this.imageUrlChange}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="exampleVideoUrl">Video URL:</Label>
-                  <Input
-                    type="videoUrl"
-                    name="videoUrl"
-                    id="exampleVideoUrl"
-                    placeholder="sighting video url"
-                    value={newSighting.videoUrl}
-                    onChange={this.videoUrlChange}
-                  />
+                <FormGroup className='ml-6'>
+                <Label>Longitude: {newSighting.longitude}</Label>
                 </FormGroup>
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button onClick={this.formSubmit} color="primary">Save</Button>
-              <Button onClick={this.closeModal} color="secondary">Cancel</Button>
+              <Button onClick={this.formSubmit} color="secondary">Save</Button>
+              <Button onClick={this.closeModal} color="danger">Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>
