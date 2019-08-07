@@ -1,6 +1,11 @@
+.item-container {
+  background-color:  rgb(52,58,64);
+}
+
 .recent-header {
   color: white;
-  border-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
   background-color: rgb(52,58,64);
   display: flex;
 }
