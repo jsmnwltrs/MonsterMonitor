@@ -110,6 +110,9 @@ class Comments extends React.Component {
     const { sighting } = this.props;
 
     const makeComments = () => {
+      if (comments.length === 0) {
+        return <div className='no-comments m-3'>No Comments</div>;
+      }
       const commentItemComponents = comments.map(comment => (
         <CommentItem
           key={comment.id}
@@ -129,11 +132,11 @@ class Comments extends React.Component {
 
     return (
       <div>
-        <h2>Comments</h2>
-        <div className='message-board'>
+        <div className='sighting-comment-container m-5'>
+          <div className='sighting-message-board'>
           {makeComments()}
-        </div>
-        <div className='message-form'>
+          </div>
+          <div className='message-form m-4'>
           <CommentForm
             sighting={sighting}
             currentUser={currentUser}
@@ -141,6 +144,7 @@ class Comments extends React.Component {
             isEditing={isEditing}
             commentToEdit={commentToEdit}
           />
+        </div>
         </div>
       </div>
     );

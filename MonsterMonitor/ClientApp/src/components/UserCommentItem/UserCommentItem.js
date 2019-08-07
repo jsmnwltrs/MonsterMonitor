@@ -162,7 +162,10 @@ class UserCommentItem extends React.Component {
         <Card style={{ backgroundColor: 'rgb(209, 206, 206)', borderColor: 'black' }}>
         <CardBody>
           <CardTitle className='comment-date'>{moment(comment.dateCreated).format('MMMM Do YYYY, h:mma')}</CardTitle>
-          <CardSubtitle className='comment-isAnon'><strong>{(comment.isAnon) ? 'Anonymous' : 'Public'}</strong></CardSubtitle>
+          <CardSubtitle
+            className='comment-isAnon'>
+              <strong>{(comment.isAnon) ? 'Anonymous' : 'Public'}</strong>
+          </CardSubtitle>
           <CardText>{makeForm()}</CardText>
           {makeButtons()}
         </CardBody>

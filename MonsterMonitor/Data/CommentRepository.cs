@@ -56,7 +56,8 @@ namespace MonsterMonitor.Data
                 var commentList = db.Query<Comment>(
                     @"select *
                     from Comments
-                    where SightingId = @sightingId",
+                    where SightingId = @sightingId
+                    order by DateCreated desc",
                     new { sightingId }).ToList();
 
                 return commentList;

@@ -3,7 +3,7 @@ import {
   FormGroup,
   Col,
   Input,
-  Label,
+  CustomInput,
   Button,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
@@ -93,8 +93,9 @@ class CommentForm extends React.Component {
           </Col>
         </FormGroup>
         <FormGroup>
-          <Label for="exampleIsAnon">Post as Anonymous</Label>
-          <Input
+          <CustomInput
+            className='isAnon-check'
+            label="Post as Anonymous"
             type="checkbox"
             name="isAnon"
             id="exampleIsAnon"
