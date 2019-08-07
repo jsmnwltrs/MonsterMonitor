@@ -5,6 +5,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Col,
 } from 'reactstrap';
 import './Filters.scss';
 import PropTypes from 'prop-types';
@@ -106,7 +107,7 @@ class Filters extends React.Component {
     } = this.state;
 
     const threatLevelItems = threatLevels.map((threatLevel) => {
-      if (dropdownValue === threatLevel) {
+      if (dropdownValue === threatLevel.option) {
         return <div key={threatLevel.id}></div>;
       }
       return (<DropdownItem
@@ -118,24 +119,26 @@ class Filters extends React.Component {
     });
 
     return (
-      <div>
-        <div className='search-container'>
-          <SearchField
-            placeholder="Search sightings..."
-            onChange={this.searchChange}
-          />
-        </div>
-        <div className='threat-container'>
+      <div className='filters m-3'>
+        <Col className='col-1'></Col>
+        <Col className='threat-container col-2'>
           <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
             Threat Level:
-            <DropdownToggle caret>
+            <DropdownToggle className='dropdown-button ml-1' caret>
               {dropdownValue}
             </DropdownToggle>
             <DropdownMenu>
               {threatLevelItems}
             </DropdownMenu>
           </Dropdown>
-        </div>
+        </Col>
+        <Col className='search-container col-9'>
+          <SearchField
+            style={{ width: '700px' }}
+            placeholder="Search sightings..."
+            onChange={this.searchChange}
+          />
+        </Col>
       </div>
     );
   }

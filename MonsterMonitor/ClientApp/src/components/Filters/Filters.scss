@@ -1,0 +1,23 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+
+  .react-search-field {
+    width: 600px;
+  }
+
+  .threat-container {
+    font-weight: bold;
+  
+    .dropdown-button:hover {
+      background-color: rgb(53, 53, 53);
+      border-radius: 5px;
+    }
+  
+    .dropdown-button {
+      background-color: black;
+      border-radius: 5px;
+  
+    }
+  }
+}

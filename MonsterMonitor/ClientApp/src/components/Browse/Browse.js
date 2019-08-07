@@ -15,19 +15,30 @@ class Browse extends React.Component {
   render() {
     const { sightings } = this.state;
 
-    const sightingItemComponents = sightings.map(sighting => (
-      <SightingItem
-        key={sighting.id}
-        sighting={sighting}
-        history={this.props.history}
-      />
-    ));
+    const makeSightingItemComponents = () => {
+      if (sightings.length === 0) {
+        return (
+          <div className='no-results'>
+            No Results Found
+          </div>
+        );
+      }
+      const sightingItemComponents = sightings.map(sighting => (
+        <SightingItem
+          key={sighting.id}
+          sighting={sighting}
+          history={this.props.history}
+        />
+      ));
+      return sightingItemComponents;
+    };
 
     return (
       <div>
-        <h1>Browse</h1>
         <Filters setResults={this.setResults}/>
-        {sightingItemComponents}
+        <div className='d-flex flex-wrap justify-content-center'>
+          {makeSightingItemComponents()}
+        </div>
       </div>
     );
   }
