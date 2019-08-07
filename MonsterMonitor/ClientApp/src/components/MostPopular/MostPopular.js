@@ -34,9 +34,13 @@ class MostPopular extends React.Component {
     ));
 
     return (
-      <div>
-        <h1>MostPopular</h1>
+      <div className='mr-5 ml-5 mb-5'>
+        <div className='popular-header'>
+        <h1 className='mt-2 mb-2 ml-3'>Most Popular</h1>
+        </div>
+        <div className='items-container d-flex flex-wrap justify-content-center'>
         {sightingItemComponents}
+        </div>
       </div>
     );
   }

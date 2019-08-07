@@ -51,12 +51,39 @@ namespace MonsterMonitor.Data
         {
             using (var db = new SqlConnection(_connectionString))
             {
+                var userLikeList = db.Query<UserLike>(
+                   @"select *
+                    from UserLikes").ToList();
+
                 var sightingList = db.Query<Sighting>(
                     @"select *
                     from Sightings
                     where IsActive = @isActive
                     order by DateCreated desc",
                     new { isActive }).ToList();
+
+                foreach (var sighting in sightingList)
+                {
+                    var matchingUserLikes = userLikeList.Where(userLike => userLike.SightingId == sighting.Id).ToList();
+
+                    var totalLikes = 0;
+                    var totalDislikes = 0;
+
+                    foreach (var userLike in matchingUserLikes)
+                    {
+                        if (userLike.IsLiked)
+                        {
+                            totalLikes++;
+                        }
+                        else
+                        {
+                            totalDislikes++;
+                        }
+                    }
+
+                    sighting.Likes = totalLikes;
+                    sighting.Dislikes = totalDislikes;
+                }
 
                 return sightingList;
             }
@@ -182,10 +209,12 @@ namespace MonsterMonitor.Data
                         }
                     }
 
+                    sighting.Likes = totalLikes;
+                    sighting.Dislikes = totalDislikes;
                     sighting.Rating = totalLikes - totalDislikes;
                 }
 
-                var sortedSightings = sightingList.OrderByDescending(sighting => sighting.Rating).Take(5).ToList();
+                var sortedSightings = sightingList.OrderByDescending(sighting => sighting.Rating).Take(6).ToList();
 
                 return sortedSightings;
             }
@@ -198,7 +227,7 @@ namespace MonsterMonitor.Data
             using (var db = new SqlConnection(_connectionString))
             {
                 var sightingList = db.Query<Sighting>(
-                    @"select top (5) *
+                    @"select top (6) *
                     from Sightings
                     where IsActive = 'true'
                     order by DateCreated desc").ToList();

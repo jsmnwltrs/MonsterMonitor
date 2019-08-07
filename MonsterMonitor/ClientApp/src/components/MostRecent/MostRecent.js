@@ -34,8 +34,10 @@ class MostRecent extends React.Component {
     ));
 
     return (
-      <div>
-        <h1>MostRecent</h1>
+      <div className='m-5'>
+        <div className='recent-header'>
+        <h1 className='m-2'>Most Recent</h1>
+        </div>
         {sightingItemComponents}
       </div>
     );
