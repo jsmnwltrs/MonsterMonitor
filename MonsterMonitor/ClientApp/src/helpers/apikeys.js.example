@@ -7,7 +7,13 @@ const apiKeys = {
     storageBucket: '',
     messagingSenderId: '',
     appId: '',
-  }
+  },
+  monApi: {
+    apiBaseUrl: '',
+  },
+  GoogleGeoApi: {
+    key: '',
+  },
 };
 
 export default apiKeys;

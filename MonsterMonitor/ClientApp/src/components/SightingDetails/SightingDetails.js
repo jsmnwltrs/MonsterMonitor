@@ -100,6 +100,7 @@ class SightingDetails extends React.Component {
 
   render() {
     const { sighting, currentUser, user } = this.state;
+    const defaultImage = 'http://cdn.onlinewebfonts.com/svg/img_556571.png';
 
     const map = (
       <Map
@@ -129,11 +130,19 @@ class SightingDetails extends React.Component {
         <Card className='sighting-details-container'>
           <CardTitle className='sighting-title mt-2 mb-2 mr-5 ml-5'>{sighting.title}</CardTitle>
           <CardSubtitle
-            className='mt-1 mb-1 mr-5 ml-5 sighting-username'>
-            Posted by: {(sighting.isAnon) ? 'Anonymous' : user.username}
+            className='mt-1 mb-4 mr-5 ml-5 sighting-username'>
+            <div className='d-flex flex-wrap'>
+              <img className='sighting-avatar'
+                src={(sighting.isAnon) ? defaultImage : user.imageUrl}
+                alt='avatar'
+              />
+            <div className='mt-5 ml-2'>
+              {(sighting.isAnon) ? 'Anonymous' : user.username}
+            </div>
+            </div>
           </CardSubtitle>
-          <CardText className='mt-1 mb-1 mr-5 ml-5'>
-            <p className='sighting-date'>{moment(sighting.dateCreated).format('MMMM Do YYYY, h:mma')}</p>
+          <CardText className='mt-1 mr-5 ml-5'>
+            <p className='sighting-date'>{moment(sighting.dateCreated).format('MMMM Do YYYY')}</p>
           </CardText>
           <Row className='mt-1 mb-1 mr-5 ml-5'>
             <Col>
