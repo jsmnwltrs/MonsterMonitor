@@ -41,7 +41,9 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>Home Page</h1>
+        <img className='tree-image'
+        src='https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/tree.png?alt=media&token=9c979c17-3c43-4f20-8bd2-10e44c30ebe8'
+        alt='tree'/>
         <MostPopular history={this.props.history}/>
         <MostRecent history={this.props.history}/>
       </div>

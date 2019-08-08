@@ -1,0 +1,34 @@
+.comment-container {
+  background-color: whitesmoke;
+  height: 392px;
+  border-radius: 5px;
+  border: 1px solid white;
+
+  .header {
+    color: white;
+    border-radius: 5px;
+    background-color: rgb(52,58,64);
+    display: flex;
+    justify-content: center;
+  }
+
+  .commentItem-container {
+    overflow-y: scroll;
+    height: 335px;
+  }
+
+  .commentItem-container::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .commentItem-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+  }
+  
+  .commentItem-container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  }
+}
+

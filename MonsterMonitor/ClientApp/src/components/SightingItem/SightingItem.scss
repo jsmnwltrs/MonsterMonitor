@@ -1,0 +1,23 @@
+.card-img {
+  height: 300px;
+  width: 400px;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+  border-bottom: 1px solid gray;
+}
+
+.card-date {
+  font-size: 18px;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.card-threat {
+  font-size: 20px;
+  color: red;
+  text-shadow: -.5px 0 black, 0 .5px black, .5px 0 black, 0 -.5px black;
+}

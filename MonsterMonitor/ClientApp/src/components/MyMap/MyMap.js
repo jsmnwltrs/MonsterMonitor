@@ -6,7 +6,7 @@ import {
   Popup,
 } from 'react-leaflet';
 import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import SearchField from 'react-search-field';
 import sightingRequests from '../../helpers/data/sightingRequests';
 import userRequests from '../../helpers/data/userRequests';
@@ -19,6 +19,8 @@ class MyMap extends React.Component {
    user: [],
    lat: 0,
    long: 0,
+   userLat: 0,
+   userLong: 0,
  }
 
  componentDidMount() {
@@ -50,7 +52,12 @@ class MyMap extends React.Component {
  getUserCoordinates = () => {
    const { user } = this.state;
    mapRequests.getCoordinates(user.location).then((coordinates) => {
-     this.setState({ lat: coordinates.latitude, long: coordinates.longitude });
+     this.setState({
+       lat: coordinates.latitude,
+       long: coordinates.longitude,
+       userLong: coordinates.longitude,
+       userLat: coordinates.latitude,
+     });
      this.refs.map.leafletElement.panTo([coordinates.latitude, coordinates.longitude]);
    }).catch((error) => {
      console.error(error);
@@ -69,19 +76,23 @@ class MyMap extends React.Component {
  }
 
  makeUserMarker = () => {
-   const { user, lat, long } = this.state;
+   const { user, userLat, userLong } = this.state;
    const Profile = '/profile';
    return <Marker
    key={user.id}
-   position={[lat, long]}
+   position={[userLat, userLong]}
    >
    <Popup className='pop-up'>
-   <img className='avatar' src={user.imageUrl} alt='avatar'></img>
-   Username: {user.username}
-   Location: {user.location}
+   <Row className='d-flex justify-content-center'>
+   <img className='marker-avatar' src={user.imageUrl} alt='avatar'></img>
+   </Row>
+   <Row className='d-flex justify-content-center'>{user.username}</Row>
+   <Row className='d-flex justify-content-center'>{user.location}</Row>
+   <Row className='d-flex justify-content-center'>
    <Link to={Profile}>
     Profile Details
     </Link>
+   </Row>
    </Popup>
    </Marker>;
  }
@@ -96,12 +107,15 @@ class MyMap extends React.Component {
     position={[sighting.latitude, sighting.longitude]}
     >
     <Popup className='pop-up'>
-    Title: {sighting.title}
-    Location: {sighting.location}
-    Threat Level: {sighting.threatLevel}
+    <Row className='d-flex justify-content-center'><i className="fas fa-pastafarianism fa-5x"></i></Row>
+    <Row className='d-flex justify-content-center'><h6><strong>{sighting.title}</strong></h6></Row>
+    <Row className='d-flex justify-content-center'>{sighting.location}</Row>
+    <Row className='d-flex justify-content-center text-danger'>{sighting.threatLevel}</Row>
+    <Row className='d-flex justify-content-center'>
     <Link to={SightingDetails}>
     Sighting Details
     </Link>
+    </Row>
     </Popup>
      </Marker>
      );
@@ -137,17 +151,26 @@ class MyMap extends React.Component {
 
    return (
      <div>
-       <Button onClick={this.getUserCoordinates}>
-         Near Me
-       </Button>
-       <SearchField
-            placeholder="Search locations..."
-            onSearchClick={this.searchLocation}
-            onEnter={this.searchLocation}
-          />
-      <div className = "map">
+      <Row>
+      <Col className="col-9">
         {map}
-      </div>
+      </Col>
+      <Col className='col-3 mt-4'>
+      <Row className='m-3'>
+        <SearchField
+          classNames='search-field'
+          placeholder="Search locations..."
+          onSearchClick={this.searchLocation}
+          onEnter={this.searchLocation}
+        />
+      </Row>
+        <Row className='m-3'>
+          <Button className='nearme-button' onClick={this.getUserCoordinates}>
+            Near Me
+          </Button>
+        </Row>
+      </Col>
+      </Row>
     </div>
    );
  }

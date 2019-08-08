@@ -5,9 +5,15 @@ import {
   FormGroup,
   Col,
   Input,
-  Label,
+  CustomInput,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  CardText,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import userShape from '../../helpers/props/userShape';
 import commentShape from '../../helpers/props/commentShape';
 
@@ -93,15 +99,17 @@ class UserCommentItem extends React.Component {
       }
       return (
         <div>
-          <Link to={SightingDetails}>
-            Sighting Details
-          </Link>
           <button className="btn btn-default" onClick={this.showEditForm}>
             <i className="far fa-edit"></i>
           </button>
-          <button className="btn btn-default" onClick={this.deleteCommentEvent}>
+          <button className="btn btn-default mb-1" onClick={this.deleteCommentEvent}>
             <i className="fas fa-trash-alt"></i>
           </button>
+          <div>
+          <Link to={SightingDetails}>
+            Sighting Details
+          </Link>
+          </div>
         </div>
       );
     };
@@ -113,6 +121,7 @@ class UserCommentItem extends React.Component {
             <FormGroup row>
               <Col sm={10}>
                 <Input
+                  className='message-input'
                   type="textarea"
                   name="text"
                   id="exampleText"
@@ -122,8 +131,9 @@ class UserCommentItem extends React.Component {
               </Col>
             </FormGroup>
             <FormGroup>
-              <Label for="exampleIsAnon">Post as Anonymous</Label>
-                <Input
+                <CustomInput
+                  inline
+                  label='Post as Anonymous'
                   type="checkbox"
                   name="isAnon"
                   id="exampleIsAnon"
@@ -135,7 +145,9 @@ class UserCommentItem extends React.Component {
         );
       }
       return (
-        <p>{comment.message}</p>
+        <div className='message-container'>
+        <p className='m-3'>{comment.message}</p>
+        </div>
       );
     };
 
@@ -146,11 +158,18 @@ class UserCommentItem extends React.Component {
     }
 
     return (
-      <div>
-        <p>{(comment.isAnon) ? 'Anonymous' : ''}</p>
-        <p>{comment.dateCreated}</p>
-        {makeForm()}
-        {makeButtons()}
+      <div className='comment-card'>
+        <Card style={{ backgroundColor: 'rgb(209, 206, 206)', borderColor: 'black' }}>
+        <CardBody>
+          <CardTitle className='comment-date'>{moment(comment.dateCreated).format('MMMM Do YYYY, h:mma')}</CardTitle>
+          <CardSubtitle
+            className='comment-isAnon'>
+              <strong>{(comment.isAnon) ? 'Anonymous' : 'Public'}</strong>
+          </CardSubtitle>
+          <CardText>{makeForm()}</CardText>
+          {makeButtons()}
+        </CardBody>
+      </Card>
       </div>
     );
   }

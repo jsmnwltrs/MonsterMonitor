@@ -73,11 +73,13 @@ class ProfileModal extends React.Component {
 
     return (
         <div>
-          <Button onClick={this.toggle}>Edit Profile</Button>
+          <div className='d-flex justify-content-center'>
+          <Button className='edit-profile-btn' onClick={this.toggle}>Edit Profile</Button>
+          </div>
           <Modal isOpen={modal} toggle={this.toggle}>
             <ModalHeader toggle={this.toggle}>Edit Profile</ModalHeader>
             <ModalBody>
-              <Form>
+              <Form onSubmit={this.formSubmit}>
                 <FormGroup>
                   <Label for="exampleUsername">Username</Label>
                   <Input
@@ -114,8 +116,8 @@ class ProfileModal extends React.Component {
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button onClick={this.formSubmit} color="primary">Save</Button>
-              <Button onClick={this.toggle} color="secondary">Cancel</Button>
+              <Button onClick={this.formSubmit} color="secondary">Save</Button>
+              <Button onClick={this.toggle} color="danger">Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>

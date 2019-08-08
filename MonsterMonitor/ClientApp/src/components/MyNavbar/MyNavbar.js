@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { NavLink as RRNavLink } from 'react-router-dom';
 import {
   Navbar,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
@@ -24,26 +23,36 @@ class MyNavbar extends React.Component {
         return (
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink tag={RRNavLink} to='/profile'>Profile</NavLink>
+              <NavLink className='m-2 icon' tag={RRNavLink} to='/profile'><i className="fas fa-user-alt"></i></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to='/map'>Map</NavLink>
+              <NavLink className='m-2 icon' tag={RRNavLink} to='/map'><i className="fas fa-map-marked-alt"></i></NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to='/browse'>Browse</NavLink>
+              <NavLink className='m-2 icon' tag={RRNavLink} to='/browse'><i className="fas fa-search"></i></NavLink>
             </NavItem>
-            <NavLink className='logout-link' onClick={logoutClick}>Logout</NavLink>
+            <NavLink className='m-2 icon' onClick={logoutClick}><i className="fas fa-sign-out-alt"></i></NavLink>
           </Nav>
         );
       }
       return <div></div>;
     };
 
+    if (!isAuthed) {
+      return <div></div>;
+    }
+
     return (
       <div className="my-navbar sticky-top">
         <Navbar color="dark" dark expand="md">
-          <NavbarBrand href="/">Monster Monitor</NavbarBrand>
-            {buildLinks()}
+          <NavLink tag={RRNavLink} to='/home'>
+            <img
+              className='logo'
+              src='https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/mouth.png?alt=media&token=4a1af8d9-12cd-4ebb-944e-0a617a7c9dcd'
+              alt='logo'
+            />
+          </NavLink>
+          {buildLinks()}
         </Navbar>
       </div>
     );

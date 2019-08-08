@@ -17,6 +17,9 @@ namespace MonsterMonitor.Models
         public bool IsAnon { get; set; }
         public float Latitude { get; set; }
         public float Longitude { get; set; }
+
         public int Rating { get; set; }
+        public int Likes { get; set; }
+        public int Dislikes { get; set; }
     }
 }

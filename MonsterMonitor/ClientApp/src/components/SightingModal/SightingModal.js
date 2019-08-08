@@ -10,10 +10,17 @@ import {
   FormGroup,
   Label,
   Input,
+  CustomInput,
+  DropdownItem,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  Col,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import sightingShape from '../../helpers/props/sightingShape';
 import mapRequests from '../../helpers/data/mapRequests';
+import threatLevelsArray from '../../helpers/data/threatLevels';
 
 const defaultSighting = {
   userId: 0,
@@ -42,12 +49,21 @@ class SightingModal extends React.Component {
   state = {
     newSighting: defaultSighting,
     modal: false,
+    dropdownValue: 'Unknown',
+    threatLevels: threatLevelsArray,
+    dropdownOpen: false,
   }
 
   componentWillReceiveProps(props) {
     if (props.isEditing) {
       this.openEditModal(props.sighting);
     }
+  }
+
+  toggle = () => {
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen,
+    }));
   }
 
   closeModal = () => {
@@ -75,6 +91,7 @@ class SightingModal extends React.Component {
     this.setState(prevState => ({
       modal: !prevState.modal,
       newSighting: tempSighting,
+      dropdownValue: sighting.threatLevel,
     }));
   }
 
@@ -133,13 +150,39 @@ class SightingModal extends React.Component {
     this.setState({ newSighting: tempSighting });
   }
 
+  changeThreatLevelValue = (e) => {
+    const tempSighting = { ...this.state.newSighting };
+    tempSighting.threatLevel = e.target.value;
+    const dropdownValue = e.target.value;
+    this.setState({ newSighting: tempSighting, dropdownValue });
+  }
 
   render() {
-    const { newSighting, modal } = this.state;
+    const {
+      newSighting,
+      modal,
+      threatLevels,
+      dropdownValue,
+    } = this.state;
+
+    const threatLevelItems = threatLevels.map((threatLevel) => {
+      if (dropdownValue === threatLevel.option) {
+        return <div key={threatLevel.id}></div>;
+      }
+      if (threatLevel.option === 'All') {
+        return <div key={threatLevel.id}></div>;
+      }
+      return (<DropdownItem
+        value={threatLevel.option}
+        key={threatLevel.id}
+        onClick={this.changeThreatLevelValue}>
+        {threatLevel.option}
+        </DropdownItem>);
+    });
 
     return (
         <div>
-          <Button onClick={this.openAddModal}>Add New Sighting</Button>
+          <Button className='' onClick={this.openAddModal}>Add New Sighting</Button>
           <Modal isOpen={modal}>
             <ModalHeader>
             {(this.props.isEditing === true) ? 'Edit Sighting' : 'Add Sighting'}
@@ -147,17 +190,19 @@ class SightingModal extends React.Component {
             <ModalBody>
               <Form>
                 <FormGroup>
-                  <Input
+                  <CustomInput
+                    inline
+                    label='Post as Anonymous'
                     type="checkbox"
                     name="isAnon"
-                    id="exampleIsAnon"
+                    id="exampleCustomInline"
                     checked={newSighting.isAnon}
                     onChange={this.isAnonChange}
                   />
-                  <Label for="exampleIsAnon">Post as Anonymous</Label>
                 </FormGroup>
-                <FormGroup>
-                  <Label for="exampleTitle">Title:</Label>
+                <FormGroup row>
+                  <Label sm={2} for="exampleTitle">Title:</Label>
+                  <Col sm={10}>
                   <Input
                     type="title"
                     name="title"
@@ -166,47 +211,11 @@ class SightingModal extends React.Component {
                     value={newSighting.title}
                     onChange={this.titleChange}
                   />
+                  </Col>
                 </FormGroup>
-                <FormGroup>
-                  <Label for="exampleThreatLevel">Threat Level</Label>
-                  <Input
-                    type="threatLevel"
-                    name="threatLevel"
-                    id="exampleThreatLevel"
-                    placeholder="sighting threat level"
-                    value={newSighting.threatLevel}
-                    onChange={this.threatLevelChange}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="exampleLocation">Location:</Label>
-                  <Input
-                    type="location"
-                    name="location"
-                    id="exampleLocation"
-                    placeholder="sighting location"
-                    value={newSighting.location}
-                    onChange={this.locationChange}
-                  />
-                </FormGroup>
-                <FormGroup className='d-flex justify-content-between'>
-                  <Button onClick={this.generateCoordinates}>Generate Coordinates</Button>
-                  <Label className='m-6'>Longitude: <p>{newSighting.longitude}</p></Label>
-                  <Label className='m-6'>Latitude: <p>{newSighting.latitude}</p></Label>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="exampleDescription">Description:</Label>
-                  <Input
-                    type="description"
-                    name="description"
-                    id="exampleDescription"
-                    placeholder="sighting description"
-                    value={newSighting.description}
-                    onChange={this.descriptionChange}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="exampleImageUrl">Image URL:</Label>
+                <FormGroup row>
+                  <Label sm={2} for="exampleImageUrl">Image:</Label>
+                  <Col sm={10}>
                   <Input
                     type="imageUrl"
                     name="imageUrl"
@@ -215,23 +224,59 @@ class SightingModal extends React.Component {
                     value={newSighting.imageUrl}
                     onChange={this.imageUrlChange}
                   />
+                  </Col>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="exampleVideoUrl">Video URL:</Label>
+                  <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    Threat Level:
+                  <DropdownToggle className='ml-2' caret>
+                    {dropdownValue}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {threatLevelItems}
+                  </DropdownMenu>
+                  </Dropdown>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={2} for="exampleDescription">Desc:</Label>
+                  <Col sm={10}>
                   <Input
-                    type="videoUrl"
-                    name="videoUrl"
-                    id="exampleVideoUrl"
-                    placeholder="sighting video url"
-                    value={newSighting.videoUrl}
-                    onChange={this.videoUrlChange}
+                    type="textarea"
+                    name="description"
+                    id="exampleDescription"
+                    placeholder="sighting description"
+                    value={newSighting.description}
+                    onChange={this.descriptionChange}
                   />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={2} for="exampleLocation">Location:</Label>
+                  <Col sm={10}>
+                  <Input
+                    type="location"
+                    name="location"
+                    id="exampleLocation"
+                    placeholder="sighting location"
+                    value={newSighting.location}
+                    onChange={this.locationChange}
+                  />
+                  </Col>
+                </FormGroup>
+                <FormGroup className='ml-6'>
+                  <Button onClick={this.generateCoordinates}>Generate Coordinates</Button>
+                </FormGroup>
+                <FormGroup className='ml-6'>
+                <Label>Latitude: {newSighting.latitude}</Label>
+                </FormGroup>
+                <FormGroup className='ml-6'>
+                <Label>Longitude: {newSighting.longitude}</Label>
                 </FormGroup>
               </Form>
             </ModalBody>
             <ModalFooter>
-              <Button onClick={this.formSubmit} color="primary">Save</Button>
-              <Button onClick={this.closeModal} color="secondary">Cancel</Button>
+              <Button onClick={this.formSubmit} color="secondary">Save</Button>
+              <Button onClick={this.closeModal} color="danger">Cancel</Button>
             </ModalFooter>
           </Modal>
         </div>

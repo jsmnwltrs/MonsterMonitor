@@ -1,4 +1,18 @@
-.avatar {
+.marker-avatar {
   height: 100px;
-  width: 50px;
+  width: 75px;
+}
+
+.search-field {
+  width: 300px;
+}
+
+.nearme-button:hover {
+  background-color: rgb(53, 53, 53);
+  border-radius: 5px;
+}
+
+.nearme-button {
+  background-color: black;
+  border-radius: 5px;
 }

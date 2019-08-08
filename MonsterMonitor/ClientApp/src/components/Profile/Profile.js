@@ -1,6 +1,14 @@
 import React from 'react';
-import { Label } from 'reactstrap';
 import './Profile.scss';
+import {
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardImg,
+  CardSubtitle,
+  CardText,
+} from 'reactstrap';
 import userRequests from '../../helpers/data/userRequests';
 import ProfileModal from '../ProfileModal/ProfileModal';
 import SightingManagement from '../SightingManagement/SightingManagement';
@@ -55,17 +63,26 @@ class Profile extends React.Component {
 
     return (
       <div>
-        <h1>Your Profile</h1>
-        <ProfileModal user={user} onSubmit={this.onSubmitUser}/>
-        <div className='profile-container'>
-          <img className='profile-avatar' src={user.imageUrl} alt='profile-avatar'></img>
-          <Label>Username: </Label>
-          <p>{user.username}</p>
-          <Label>Location: </Label>
-          <p>{user.location}</p>
-        </div>
+        <Row className='m-5'>
+          <Col className='profile-container col-3'>
+            <Card className='d-flex justify-content-center'>
+              <h2 className='profile-header'>Your Profile</h2>
+              <Row className='d-flex justify-content-center mt-1'>
+              <CardImg top width="100%" className='profile-avatar' src={user.imageUrl} alt='profile-avatar' />
+              </Row>
+              <CardBody>
+                <CardSubtitle className='d-flex justify-content-center'>{user.username}</CardSubtitle>
+                <CardText className='d-flex justify-content-center mt-1'>{user.location}</CardText>
+                <ProfileModal user={user} onSubmit={this.onSubmitUser}/>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col className='col-1'></Col>
+          <Col className='comments-container col-8'>
+          <UserComments />
+          </Col>
+        </Row>
         <SightingManagement userId={user.id} history={this.props.history}/>
-        <UserComments />
       </div>
     );
   }

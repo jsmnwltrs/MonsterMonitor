@@ -3,8 +3,9 @@ import {
   FormGroup,
   Col,
   Input,
-  Label,
+  CustomInput,
   Button,
+  Row,
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import './CommentForm.scss';
@@ -79,8 +80,9 @@ class CommentForm extends React.Component {
 
   render() {
     const { newComment } = this.state;
+    const { isEditing } = this.props;
     return (
-      <div>
+      <div className='form-template'>
         <FormGroup row>
           <Col sm={10}>
             <Input
@@ -92,9 +94,11 @@ class CommentForm extends React.Component {
               />
           </Col>
         </FormGroup>
+        <Row className='d-flex justify-content-between'>
         <FormGroup>
-          <Label for="exampleIsAnon">Post as Anonymous</Label>
-          <Input
+          <CustomInput
+            className='isAnon-check'
+            label="Post as Anonymous"
             type="checkbox"
             name="isAnon"
             id="exampleIsAnon"
@@ -102,9 +106,12 @@ class CommentForm extends React.Component {
             onChange={this.isAnonChange}
           />
         </FormGroup>
-        <Button onClick={this.formSubmit}>
-          Post Comment
-        </Button>
+        <FormGroup>
+          <Button className='post-button' onClick={this.formSubmit}>
+            {(isEditing) ? 'Edit Comment' : 'Post Comment'}
+          </Button>
+        </FormGroup>
+        </Row>
       </div>
     );
   }
