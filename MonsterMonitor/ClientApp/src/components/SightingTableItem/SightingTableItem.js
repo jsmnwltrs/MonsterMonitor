@@ -56,7 +56,7 @@ class SightingTableItem extends React.Component {
 
     return (
       <tr className="sighting-item">
-        <td onClick={this.goToSightingDetails}>{sighting.title}</td>
+        <td className='title-click' onClick={this.goToSightingDetails}>{sighting.title}</td>
         <td>{sighting.location}</td>
         <td>{sighting.threatLevel}</td>
         <td>{(sighting.isActive === true) ? 'Active' : 'Inactive'}</td>
