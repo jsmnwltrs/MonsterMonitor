@@ -21,28 +21,6 @@ Firebase is used for user registration and authentiacation. Leaflet was used for
 * Leaflet
 * Moment.js
 
-## ERD
-![ERD](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonsterMonitorERD.png?alt=media&token=e4fd4d36-47b0-416a-ba98-972523c48dff)
-
-## Screenshots
-### Login
-![Login](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonLogin.png?alt=media&token=b676f566-faee-4b94-9230-2c6ee6d33198)
-
-### Home
-![Home screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonHome.png?alt=media&token=02b60fc3-111d-4982-b7ea-434be5e3220c)
-
-### Profile
-![Profile screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonProfile.png?alt=media&token=5793698c-40bf-4683-b909-6c09ca7444d9)
-
-### Map
-![Map screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonMap.png?alt=media&token=7c38755f-024e-4c57-b047-e6e1968ee85e)
-
-### Browse
-![Browse screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonBrowse.png?alt=media&token=2c825741-69e9-4257-a43a-4ce510cecbff)
-
-### Sighting Details
-![Details screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonDetails.png?alt=media&token=10efda0d-5097-48c4-8cb7-f57b4006b051)
-
 
 ## How to run this app
 Note: To run this app you will need a firebase account and a new project.
@@ -61,3 +39,28 @@ Note: To run this app you will need a firebase account and a new project.
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+
+
+## ERD
+![ERD](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonsterMonitorERD.png?alt=media&token=e4fd4d36-47b0-416a-ba98-972523c48dff)
+
+
+## Screenshots
+### Login
+![Login](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonLogin.png?alt=media&token=b676f566-faee-4b94-9230-2c6ee6d33198)
+
+### Home
+![Home screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonHome.png?alt=media&token=02b60fc3-111d-4982-b7ea-434be5e3220c)
+
+### Profile
+![Profile screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonProfile.png?alt=media&token=5793698c-40bf-4683-b909-6c09ca7444d9)
+
+### Map
+![Map screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonMap.png?alt=media&token=7c38755f-024e-4c57-b047-e6e1968ee85e)
+
+### Browse
+![B screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonBrowse.png?alt=media&token=fd834662-3015-420a-8063-e6eaf913af8f)
+
+### Sighting Details
+![Details screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonDetails.png?alt=media&token=10efda0d-5097-48c4-8cb7-f57b4006b051)
