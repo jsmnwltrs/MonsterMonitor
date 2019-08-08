@@ -1,4 +1,4 @@
-# MonsterMonitor
+# MonsterMonitor :japanese_ogre:
 
 Monster Monitor is a public app that allows users to document and view monster sightings within their area. Any user
 can post and update their own monster sightings. Users can browse all sightings and filter results. A map view is 
