@@ -32,7 +32,7 @@ class SightingItem extends React.Component {
           <CardTitle className='card-title'>{sighting.title}</CardTitle>
           <CardText>
             <Row className='card-date m-1'>
-              {moment(sighting.dateCreated).format('MMMM Do YYYY, h:mma')}
+              {moment(sighting.dateCreated).format('MMMM Do YYYY')}
             </Row>
             <Row>
               <Col className='card-threat col-8'>

@@ -105,7 +105,8 @@ class UserLike extends React.Component {
       if (userLike.isLiked) {
         return (
         <div>
-          <i onClick={this.deleteEvent} className="fas fa-thumbs-up fa-2x m-3 checked-buttons">  {this.state.totalLikes}</i>
+          <i onClick={this.deleteEvent}
+          className="fas fa-thumbs-up fa-2x m-3 checked-buttons">  {this.state.totalLikes}</i>
           <i onClick={() => {
             this.likeEvent(false);
           }} className="far fa-thumbs-down fa-2x m-3 buttons">  {this.state.totalDislikes}</i>
@@ -118,7 +119,8 @@ class UserLike extends React.Component {
             <i onClick={() => {
               this.likeEvent(true);
             }}className="far fa-thumbs-up fa-2x m-3 buttons">  {this.state.totalLikes}</i>
-            <i onClick={this.deleteEvent} className="fas fa-thumbs-down fa-2x m-3 checked-buttons">  {this.state.totalDislikes}</i>
+            <i onClick={this.deleteEvent}
+            className="fas fa-thumbs-down fa-2x m-3 checked-buttons">  {this.state.totalDislikes}</i>
           </div>
         );
       }

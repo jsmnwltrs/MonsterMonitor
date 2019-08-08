@@ -158,7 +158,7 @@ class UserCommentItem extends React.Component {
     }
 
     return (
-      <div className='comment-card'>
+      <div className='comment-card m-3'>
         <Card style={{ backgroundColor: 'rgb(209, 206, 206)', borderColor: 'black' }}>
         <CardBody>
           <CardTitle className='comment-date'>{moment(comment.dateCreated).format('MMMM Do YYYY, h:mma')}</CardTitle>
