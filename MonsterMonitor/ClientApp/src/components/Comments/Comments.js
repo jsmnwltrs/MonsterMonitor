@@ -131,12 +131,12 @@ class Comments extends React.Component {
     }
 
     return (
-      <div>
-        <div className='sighting-comment-container m-5'>
-          <div className='sighting-message-board'>
+      <div className='d-flex justify-content-center'>
+      <div className='sighting-comment-container'>
+        <div className='sighting-message-board'>
           {makeComments()}
-          </div>
-          <div className='message-form m-4'>
+        </div>
+        <div className='message-form m-4'>
           <CommentForm
             sighting={sighting}
             currentUser={currentUser}
@@ -145,7 +145,7 @@ class Comments extends React.Component {
             commentToEdit={commentToEdit}
           />
         </div>
-        </div>
+      </div>
       </div>
     );
   }

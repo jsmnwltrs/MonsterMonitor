@@ -101,7 +101,7 @@ class CommentItem extends React.Component {
     }
 
     return (
-      <div className='incoming-comment'>
+      <div className='incoming-comment ml-4'>
       <div className='d-flex flex-wrap justify-content-start ml-4'>
       <div className='mt-3'>
         <img className='avatar'
@@ -119,12 +119,6 @@ class CommentItem extends React.Component {
       </div>
     <div className='d-flex justify-content-start ml-5'>
       <p className='mt-3 ml-5'>{moment(comment.dateCreated).format('MMMM Do YYYY, h:mma')}</p>
-      <button className="btn btn-default" onClick={this.updateCommentEvent}>
-        <i className="far fa-edit"></i>
-      </button>
-      <button className="btn btn-default" onClick={this.deleteCommentEvent}>
-        <i className="fas fa-trash-alt"></i>
-      </button>
     </div>
   </div>
     );
