@@ -60,7 +60,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ![Map screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonMap.png?alt=media&token=7c38755f-024e-4c57-b047-e6e1968ee85e)
 
 ### Browse
-![B screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonBrowse.png?alt=media&token=fd834662-3015-420a-8063-e6eaf913af8f)
+![Browse screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonBrowse.png?alt=media&token=a94249c5-0cf5-4609-b2f5-7eca2748ff37)
 
 ### Sighting Details
 ![Details screen](https://firebasestorage.googleapis.com/v0/b/monster-monitor-5c7dc.appspot.com/o/MonMonDetails.png?alt=media&token=10efda0d-5097-48c4-8cb7-f57b4006b051)
