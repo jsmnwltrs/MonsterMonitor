@@ -232,8 +232,35 @@ namespace MonsterMonitor.Data
                     where IsActive = 'true'
                     order by DateCreated desc").ToList();
 
+                var userLikeList = db.Query<UserLike>(
+                 @"select *
+                    from UserLikes").ToList();
+
+                foreach (var sighting in sightingList)
+                {
+                    var matchingUserLikes = userLikeList.Where(userLike => userLike.SightingId == sighting.Id).ToList();
+
+                    var totalLikes = 0;
+                    var totalDislikes = 0;
+
+                    foreach (var userLike in matchingUserLikes)
+                    {
+                        if (userLike.IsLiked)
+                        {
+                            totalLikes++;
+                        }
+                        else
+                        {
+                            totalDislikes++;
+                        }
+                    }
+
+                    sighting.Likes = totalLikes;
+                    sighting.Dislikes = totalDislikes;
+                }
+
                 return sightingList;
-            }
+        }
 
             throw new Exception("No Sightings Found");
         }

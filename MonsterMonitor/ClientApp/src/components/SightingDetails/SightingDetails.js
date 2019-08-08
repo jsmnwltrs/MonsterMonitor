@@ -142,7 +142,7 @@ class SightingDetails extends React.Component {
             </div>
           </CardSubtitle>
           <CardText className='mt-1 mr-5 ml-5'>
-            <p className='sighting-date'>{moment(sighting.dateCreated).format('MMMM Do YYYY')}</p>
+            <p className='sighting-date'>Posted {moment(sighting.dateCreated).format('MMMM Do YYYY')}</p>
           </CardText>
           <Row className='mt-1 mb-1 mr-5 ml-5'>
             <Col>
@@ -153,9 +153,13 @@ class SightingDetails extends React.Component {
             </Col>
           </Row>
           <CardText className='mt-1 mb-1 mr-5 ml-5'>
-            <div className='d-flex flex-wrap'>
+            <div className='d-flex flex-wrap ml-4'>
               <strong className='mr-2'>Threat Level:</strong>
               <p className='sighting-threat'>{sighting.threatLevel}</p>
+            </div>
+            <div className='d-flex flex-wrap sighting-location ml-4'>
+              <strong className='mr-2'>Location:</strong>
+              <p>{sighting.location}</p>
             </div>
             <div className='sighting-desc'>
               <p className='m-3'>{sighting.description}</p>

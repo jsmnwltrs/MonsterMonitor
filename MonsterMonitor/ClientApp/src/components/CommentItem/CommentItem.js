@@ -80,7 +80,7 @@ class CommentItem extends React.Component {
             </div>
           </div>
           <div className='mt-3'>
-            <img className='avatar'
+            <img className='avatar click-avatar'
               src={(comment.isAnon) ? defaultImage : user.imageUrl}
               alt='avatar'
               onClick={this.goToProfile}
