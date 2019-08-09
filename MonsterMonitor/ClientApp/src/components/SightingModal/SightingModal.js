@@ -49,7 +49,7 @@ class SightingModal extends React.Component {
   state = {
     newSighting: defaultSighting,
     modal: false,
-    dropdownValue: 'Unknown',
+    dropdownValue: 'Choose...',
     threatLevels: threatLevelsArray,
     dropdownOpen: false,
   }
@@ -67,14 +67,18 @@ class SightingModal extends React.Component {
   }
 
   closeModal = () => {
-    this.setState({ newSighting: {}, modal: false });
+    this.setState({
+      newSighting: defaultSighting,
+      dropdownValue: 'Choose...',
+      modal: false,
+    });
     if (this.props.isEditing) {
       this.props.changeIsEditing(false);
     }
   }
 
   openEditModal = (sighting) => {
-    const tempSighting = defaultSighting;
+    const tempSighting = {};
     tempSighting.id = sighting.id;
     tempSighting.userId = sighting.userId;
     tempSighting.title = sighting.title;
@@ -97,6 +101,8 @@ class SightingModal extends React.Component {
 
   openAddModal = () => {
     this.setState(prevState => ({
+      newSighting: defaultSighting,
+      dropdownValue: 'Choose...',
       modal: !prevState.modal,
     }));
   }
@@ -110,7 +116,11 @@ class SightingModal extends React.Component {
       mySighting.userId = this.props.userId;
     }
     onSubmit(mySighting);
-    this.setState({ newSighting: {}, modal: false });
+    this.setState({
+      newSighting: defaultSighting,
+      dropdownValue: 'Choose...',
+      modal: false,
+    });
   }
 
   generateCoordinates = () => {
