@@ -20,7 +20,7 @@ IF EXISTS (
         -- GO
     END
 
--- Create a new database called 'MonsterMonitor'
+-- Create a new database
 -- Connect to the 'master' database to run this snippet
 USE master
 GO
