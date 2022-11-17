@@ -17,7 +17,7 @@
     "react-leaflet": "^2.4.0",
     "react-leaflet-search": "^0.6.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.4.4",
     "reactstrap": "^8.0.0"
   },
   "scripts": {
